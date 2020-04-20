@@ -35,6 +35,7 @@
     "graphql-subscriptions": "^1.1.0",
     "graphql-tools": "^5.0.0",
     "mongoose": "^5.9.9",
+    "nest-cli": "^0.0.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4"
