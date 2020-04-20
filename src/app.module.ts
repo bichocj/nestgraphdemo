@@ -6,6 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 // import { AppService } from './app.service';
 import { RecipesModule } from './recipes/recipes.module';
 import { ProductsModule } from './products/products.module';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { ProductsModule } from './products/products.module';
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',
     }),
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
   ],
   // controllers: [AppController],
   // providers: [AppService],
