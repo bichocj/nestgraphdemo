@@ -63,4 +63,7 @@ export class Product {
 
   @Field(type => ID)
   categoryId: string;
+
+  @Field(type => Restaurant)
+  restaurant?: string;
 }

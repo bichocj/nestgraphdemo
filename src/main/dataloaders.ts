@@ -4,10 +4,11 @@ export interface IDataLoader<K, V> {
 
 import DataLoader from 'dataloader';
 import { ProductsService } from './products.service';
-import { User } from './dto/graphql/outputs';
+import { User, Restaurant } from './dto/graphql/outputs';
+import { RestaurantsService } from './restaurants.service';
 
 export class OwnerDataLoader implements IDataLoader<string, User> {
-  constructor(private readonly dataLoader: DataLoader<string, User>) {}
+  constructor(private readonly dataLoader: DataLoader<string, User>) { }
 
   public static async create(productsService: ProductsService): Promise<OwnerDataLoader> {
     const dataLoader = new DataLoader<string, User>(async keys => {
@@ -20,6 +21,24 @@ export class OwnerDataLoader implements IDataLoader<string, User> {
     });
 
     return new OwnerDataLoader(dataLoader);
+  }
+
+  public async load(id: string) {
+    return this.dataLoader.load(id);
+  }
+}
+
+
+export class RestaurantDataLoader implements IDataLoader<string, Restaurant> {
+  constructor(private readonly dataLoader: DataLoader<string, Restaurant>) { }
+
+  public static async create(restaurantsService: RestaurantsService): Promise<RestaurantDataLoader> {
+    const dataLoader = new DataLoader<string, Restaurant>(async keys => {
+      const loadedEntities = await restaurantsService.findAll({ '_id': { $in: keys } });
+      return keys.map(key => loadedEntities.find(entity => `${entity.id}` === `${key}`));
+    });
+
+    return new RestaurantDataLoader(dataLoader);
   }
 
   public async load(id: string) {

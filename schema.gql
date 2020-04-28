@@ -28,6 +28,7 @@ type Product {
   cost: Float!
   restaurantId: ID!
   categoryId: ID!
+  restaurant: Restaurant!
 }
 
 type Query {

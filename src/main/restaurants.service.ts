@@ -8,32 +8,34 @@ import { restaurantInterfaceToDto } from './dto/transformers';
 
 @Injectable()
 export class RestaurantsService {
-  constructor(@InjectModel('Restaurant') private RestaurantDto: Model<RestaurantInterface>) { }
+  constructor(@InjectModel('Restaurant') private entity: Model<RestaurantInterface>) { }
 
   async create(data: RestaurantDto): Promise<RestaurantDto> {
-    let created = new this.RestaurantDto(data);
+    let created = new this.entity(data);
     created = await created.save();
     const restaurant = restaurantInterfaceToDto(created);
     return restaurant;
   }
 
   async update(_id: string, data: RestaurantDto): Promise<RestaurantDto> {
-    const updatedRestaurant = await this.RestaurantDto.findOneAndUpdate({ _id }, data, { new: true });
+    const updatedRestaurant = await this.entity.findOneAndUpdate({ _id }, data, { new: true });
     return restaurantInterfaceToDto(updatedRestaurant);
   }
 
   async findOneById(id: string): Promise<RestaurantDto> {
-    const item = await this.RestaurantDto.findOne({ _id: id }).exec();
+    const item = await this.entity.findOne({ _id: id }).exec();
     return restaurantInterfaceToDto(item);
   }
 
-  async findAll(): Promise<RestaurantDto[]> {
-    const items = await this.RestaurantDto.find().exec();
+  async findAll(where={}): Promise<RestaurantDto[]> {
+    console.log('where')
+    console.log(where)
+    const items = await this.entity.find(where).exec();
     return items.map(item => restaurantInterfaceToDto(item))
   }
 
   async remove(id: string): Promise<boolean> {
-    await this.RestaurantDto.findByIdAndRemove(id);
+    await this.entity.findByIdAndRemove(id);
     return true;
   }
 }

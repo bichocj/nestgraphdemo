@@ -1,15 +1,20 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
 import { ProductsService } from './products.service';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
-import { Product } from './dto/graphql/outputs';
+import { Product, Restaurant } from './dto/graphql/outputs';
 import { ProductInput } from './dto/graphql/inputs';
 import { productInputToDto } from './dto/transformers';
+import { RestaurantDataLoader } from './dataloaders';
+import { ProductDto } from 'src/dataAccess/dto';
 
 @Resolver(of => Product)
 export class ProductsResolver {
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly restaurantDataLoader: RestaurantDataLoader
+    ) { }
 
   @Query(returns => Product)
   async product(@Args('id') id: string): Promise<Product> {
@@ -44,6 +49,12 @@ export class ProductsResolver {
     return product;
   }
 
+  
+  @ResolveProperty("restaurant", () => Restaurant)
+  async restaurant(@Parent() product: ProductDto): Promise<Restaurant> {
+    const { restaurantId } = product;
+    return this.restaurantDataLoader.load(restaurantId);
+  }
   // @Mutation(returns => Boolean)
   // async removeProduct(@Args('id') id: string) {
   //   return this.productsService.remove(id);
