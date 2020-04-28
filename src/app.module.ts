@@ -4,16 +4,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RecipesModule } from './recipes/recipes.module';
-import { ProductsModule } from './products/products.module';
+import { MainModule } from './main/main.module';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 @Module({
   imports: [
-    RecipesModule,
-    ProductsModule,
+    MainModule,
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'schema.gql',

@@ -1,14 +1,11 @@
 import { NotFoundException } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-// import { PubSub } from 'apollo-server-express';
-// import { ProductsArgs } from './dto/products.args';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-
-import { ProductInput } from './dto/graphql/product-input';
-import { Product } from './dto/graphql/product.model';
 import { ProductsService } from './products.service';
-import { productInputToModel } from './transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
+import { Product } from './dto/graphql/entities.model';
+import { ProductInput } from './dto/graphql/entities.inputs';
+import { productInputToModel } from './dto/transformers';
 
 @Resolver(of => Product)
 export class ProductsResolver {

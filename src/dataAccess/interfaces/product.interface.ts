@@ -5,4 +5,5 @@ export interface ProductInterface extends Document {
   readonly description: string,
   readonly price: number,
   readonly cost: number,
+  readonly restaurantId: string,
 }

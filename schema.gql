@@ -2,16 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Recipe {
+type Restaurant {
   id: ID!
-  title: String!
-  description: String
-  creationDate: Date!
-  ingredients: [String!]!
+  name: String!
+  address: String
+  products: [Product!]!
 }
-
-"""Date custom scalar type"""
-scalar Date
 
 type Product {
   id: ID!
@@ -19,26 +15,21 @@ type Product {
   description: String
   price: Float!
   cost: Float!
+  restaurantId: ID!
 }
 
 type Query {
-  recipe(id: String!): Recipe!
-  recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
   product(id: String!): Product!
   products(skip: Int = 0, take: Int = 25): [Product!]!
+  restaurant(id: String!): Restaurant!
+  restaurants(skip: Int = 0, take: Int = 25): [Restaurant!]!
 }
 
 type Mutation {
-  addRecipe(newRecipeData: NewRecipeInput!): Recipe!
-  removeRecipe(id: String!): Boolean!
   addProduct(productInput: ProductInput!): Product!
   updateProduct(productInput: ProductInput!, id: String!): Product!
-}
-
-input NewRecipeInput {
-  title: String!
-  description: String
-  ingredients: [String!]!
+  addRestaurant(restaurantInput: RestaurantInput!): Restaurant!
+  updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
 }
 
 input ProductInput {
@@ -46,8 +37,10 @@ input ProductInput {
   description: String
   price: Float!
   cost: Float!
+  restaurantId: ID!
 }
 
-type Subscription {
-  recipeAdded: Recipe!
+input RestaurantInput {
+  name: String!
+  address: String
 }

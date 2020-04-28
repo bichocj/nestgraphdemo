@@ -4,7 +4,8 @@ export class ProductModel {
   description: string;
   price: number;
   cost: number;
-  constructor({ id = undefined, name, description, price, cost }) {
+  restaurantId: string;
+  constructor({ id = undefined, name, description, price, cost, restaurantId }) {
     if (id) {
       this.id = id;
     }
@@ -12,6 +13,7 @@ export class ProductModel {
     this.description = description;
     this.price = price;
     this.cost = cost;
+    this.restaurantId = restaurantId;
   }
 
 }

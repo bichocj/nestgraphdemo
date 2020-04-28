@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProductInterface } from './dataAccess/interfaces/product.interface';
-import { ProductModel } from './dataAccess/models/product.model';
-import { productInterfaceToModel } from './transformers';
+import { ProductInterface } from '../dataAccess/interfaces/product.interface';
+import { ProductModel } from '../dataAccess/models/product.model';
+import { productInterfaceToModel } from './dto/transformers';
 
 @Injectable()
 export class ProductsService {
@@ -26,8 +26,8 @@ export class ProductsService {
     return productInterfaceToModel(item);
   }
 
-  async findAll(): Promise<ProductModel[]> {
-    const items = await this.productModel.find().exec();
+  async findAll(where={}): Promise<ProductModel[]> {
+    const items = await this.productModel.find(where).exec();
     return items.map(item => productInterfaceToModel(item))
   }
 
