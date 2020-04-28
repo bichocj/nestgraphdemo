@@ -1,5 +1,16 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+
+@ObjectType()
+export class User {
+  @Field(type => ID)
+  id: string;
+
+  @Field()
+  username: string;
+
+}
+
 @ObjectType()
 export class Restaurant {
   @Field(type => ID)
@@ -13,6 +24,9 @@ export class Restaurant {
 
   @Field(type => [Product])
   products?: Product[];
+
+  @Field(type => User, {nullable:true})
+  owner?: User;
 
 }
 

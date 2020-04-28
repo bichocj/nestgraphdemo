@@ -2,11 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: ID!
+  username: String!
+}
+
 type Restaurant {
   id: ID!
   name: String!
   address: String
   products: [Product!]!
+  owner: User
 }
 
 type Product {
