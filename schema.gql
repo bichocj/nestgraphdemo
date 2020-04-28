@@ -15,6 +15,11 @@ type Restaurant {
   owner: User
 }
 
+type Category {
+  id: ID!
+  name: String!
+}
+
 type Product {
   id: ID!
   name: String!
@@ -22,6 +27,7 @@ type Product {
   price: Float!
   cost: Float!
   restaurantId: ID!
+  categoryId: ID!
 }
 
 type Query {
@@ -29,6 +35,8 @@ type Query {
   products(skip: Int = 0, take: Int = 25): [Product!]!
   restaurant(id: String!): Restaurant!
   restaurants(skip: Int = 0, take: Int = 25): [Restaurant!]!
+  category(id: String!): Category!
+  categorys(skip: Int = 0, take: Int = 25): [Category!]!
 }
 
 type Mutation {
@@ -36,6 +44,8 @@ type Mutation {
   updateProduct(productInput: ProductInput!, id: String!): Product!
   addRestaurant(restaurantInput: RestaurantInput!): Restaurant!
   updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
+  addCategory(categoryInput: CategoryInput!): Category!
+  updateCategory(categoryInput: CategoryInput!, id: String!): Category!
 }
 
 input ProductInput {
@@ -44,9 +54,14 @@ input ProductInput {
   price: Float!
   cost: Float!
   restaurantId: ID!
+  categoryId: ID!
 }
 
 input RestaurantInput {
   name: String!
   address: String
+}
+
+input CategoryInput {
+  name: String!
 }

@@ -3,9 +3,9 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { ProductsService } from './products.service';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
-import { Product } from './dto/graphql/entities.model';
-import { ProductInput } from './dto/graphql/entities.inputs';
-import { productInputToModel } from './dto/transformers';
+import { Product } from './dto/graphql/outputs';
+import { ProductInput } from './dto/graphql/inputs';
+import { productInputToDto } from './dto/transformers';
 
 @Resolver(of => Product)
 export class ProductsResolver {
@@ -29,7 +29,7 @@ export class ProductsResolver {
   async addProduct(
     @Args('productInput') productInput: ProductInput,
   ): Promise<Product> {
-    const data = productInputToModel(productInput);
+    const data = productInputToDto(productInput);
     const product = await this.productsService.create(data);
     return product;
   }
@@ -39,7 +39,7 @@ export class ProductsResolver {
     @Args('id') id: string,
     @Args('productInput') productInput: ProductInput,
   ): Promise<Product> {
-    const data = productInputToModel(productInput);
+    const data = productInputToDto(productInput);
     const product = await this.productsService.update(id, data);
     return product;
   }

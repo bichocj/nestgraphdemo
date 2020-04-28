@@ -4,7 +4,7 @@ export interface IDataLoader<K, V> {
 
 import DataLoader from 'dataloader';
 import { ProductsService } from './products.service';
-import { User } from './dto/graphql/entities.model';
+import { User } from './dto/graphql/outputs';
 
 export class OwnerDataLoader implements IDataLoader<string, User> {
   constructor(private readonly dataLoader: DataLoader<string, User>) {}

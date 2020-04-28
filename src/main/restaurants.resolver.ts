@@ -4,10 +4,10 @@ import { Args, Mutation, Query, Resolver, Subscription, Parent, ResolveField, Re
 // import { RestaurantsArgs } from './dto/restaurants.args';
 
 
-import { RestaurantInput } from './dto/graphql/entities.inputs';
-import { Restaurant, User } from './dto/graphql/entities.model';
+import { RestaurantInput } from './dto/graphql/inputs';
+import { Restaurant, User } from './dto/graphql/outputs';
 import { RestaurantsService } from './restaurants.service';
-import { restaurantInputToModel } from './dto/transformers';
+import { restaurantInputToDto } from './dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/products.service';
 import { OwnerDataLoader } from './dataloaders';
@@ -38,7 +38,7 @@ export class RestaurantsResolver {
   async addRestaurant(
     @Args('restaurantInput') restaurantInput: RestaurantInput,
   ): Promise<Restaurant> {
-    const data = restaurantInputToModel(restaurantInput);
+    const data = restaurantInputToDto(restaurantInput);
     const restaurant = await this.restaurantsService.create(data);
     return restaurant;
   }
@@ -48,7 +48,7 @@ export class RestaurantsResolver {
     @Args('id') id: string,
     @Args('restaurantInput') restaurantInput: RestaurantInput,
   ): Promise<Restaurant> {
-    const data = restaurantInputToModel(restaurantInput);
+    const data = restaurantInputToDto(restaurantInput);
     const restaurant = await this.restaurantsService.update(id, data);
     return restaurant;
   }

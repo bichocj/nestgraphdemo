@@ -12,6 +12,13 @@ export class RestaurantInput {
   address?: string;
 }
 
+@InputType()
+export class CategoryInput {
+  @Field()
+  @MaxLength(30)
+  name: string;
+}
+
 
 @InputType()
 export class ProductInput {
@@ -31,4 +38,7 @@ export class ProductInput {
 
   @Field(type => ID)
   restaurantId: string;
+
+  @Field(type => ID)
+  categoryId: string;
 }

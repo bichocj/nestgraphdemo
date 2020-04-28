@@ -1,27 +1,34 @@
-import { RestaurantInterface } from "src/dataAccess/interfaces/restaurant.interface";
-import { RestaurantModel } from "src/dataAccess/models/restaurant.model";
-import { RestaurantInput, ProductInput } from "../graphql/entities.inputs";
-
-import { ProductInterface } from "../../../dataAccess/interfaces/product.interface";
-import { ProductModel } from "../../../dataAccess/models/product.model";
+import { ProductInterface, RestaurantInterface, CategoryInterface } from "src/dataAccess/interfaces";
+import { RestaurantInput, ProductInput, CategoryInput } from "../graphql/inputs";
+import { ProductDto, RestaurantDto, CategoryDto } from "src/dataAccess/dto";
 
 
-export function restaurantInputToModel(restaurantInput: RestaurantInput): RestaurantModel {
+export function restaurantInputToDto(restaurantInput: RestaurantInput): RestaurantDto {
   const { name, address } = restaurantInput;
-  return new RestaurantModel({ name, address });
+  return new RestaurantDto({ name, address });
 }
 
-export function restaurantInterfaceToModel(restaurantInterface: RestaurantInterface): RestaurantModel {
+export function restaurantInterfaceToDto(restaurantInterface: RestaurantInterface): RestaurantDto {
   const { id, name, address } = restaurantInterface;
-  return new RestaurantModel({ id, name, address });
+  return new RestaurantDto({ id, name, address });
 }
 
-export function productInputToModel(productInput: ProductInput): ProductModel {
-  const { name, description, price, cost, restaurantId } = productInput;
-  return new ProductModel({ name, description, price, cost, restaurantId });
+export function productInputToDto(productInput: ProductInput): ProductDto {
+  const { name, description, price, cost, restaurantId, categoryId } = productInput;
+  return new ProductDto({ name, description, price, cost, restaurantId, categoryId });
 }
 
-export function productInterfaceToModel(productInterface: ProductInterface): ProductModel {
-  const { id, name, description, price, cost, restaurantId } = productInterface;
-  return new ProductModel({ id, name, description, price, cost, restaurantId });
+export function productInterfaceToDto(productInterface: ProductInterface): ProductDto {
+  const { id, name, description, price, cost, restaurantId, categoryId } = productInterface;
+  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId });
+}
+
+export function categoryInputToDto(categoryInput: CategoryInput): CategoryDto {
+  const { name } = categoryInput;
+  return new CategoryDto({ name });
+}
+
+export function categoryInterfaceToDto(categoryInterface: CategoryInterface): CategoryDto {
+  const { id, name } = categoryInterface;
+  return new CategoryDto({ id, name });
 }

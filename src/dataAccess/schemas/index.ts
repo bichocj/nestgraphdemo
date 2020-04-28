@@ -1,6 +1,10 @@
 import * as mongoose from 'mongoose';
 
 
+export const CategorySchema = new mongoose.Schema({
+  name: String
+});
+
 export const ProductSchema = new mongoose.Schema({
   name: String,
   description: String,
@@ -10,5 +14,15 @@ export const ProductSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Restaurant',
     required: true
+  },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
   }
+});
+
+export const RestaurantSchema = new mongoose.Schema({
+  name: String,
+  address: String
 });

@@ -32,6 +32,16 @@ export class Restaurant {
 
 
 @ObjectType()
+export class Category {
+  @Field(type => ID)
+  id: string;
+
+  @Field()
+  name: string;
+
+}
+
+@ObjectType()
 export class Product {
   @Field(type => ID)
   id: string;
@@ -51,4 +61,6 @@ export class Product {
   @Field(type => ID)
   restaurantId: string;
 
+  @Field(type => ID)
+  categoryId: string;
 }

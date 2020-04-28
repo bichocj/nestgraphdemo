@@ -1,38 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ProductInterface } from '../dataAccess/interfaces/product.interface';
-import { ProductModel } from '../dataAccess/models/product.model';
-import { productInterfaceToModel } from './dto/transformers';
+import { ProductInterface } from '../dataAccess/interfaces';
+import { ProductDto } from '../dataAccess/dto';
+import { productInterfaceToDto } from './dto/transformers';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel('Product') private productModel: Model<ProductInterface>) { }
+  constructor(@InjectModel('Product') private ProductDto: Model<ProductInterface>) { }
 
-  async create(data: ProductModel): Promise<ProductModel> {
-    let created = new this.productModel(data);
+  async create(data: ProductDto): Promise<ProductDto> {
+    let created = new this.ProductDto(data);
     created = await created.save();
-    const product = productInterfaceToModel(created);
+    const product = productInterfaceToDto(created);
     return product;
   }
 
-  async update(_id: string, data: ProductModel): Promise<ProductModel> {
-    const updatedProduct = await this.productModel.findOneAndUpdate({ _id }, data, { new: true });
-    return productInterfaceToModel(updatedProduct);
+  async update(_id: string, data: ProductDto): Promise<ProductDto> {
+    const updatedProduct = await this.ProductDto.findOneAndUpdate({ _id }, data, { new: true });
+    return productInterfaceToDto(updatedProduct);
   }
 
-  async findOneById(id: string): Promise<ProductModel> {
-    const item = await this.productModel.findOne({ _id: id }).exec();
-    return productInterfaceToModel(item);
+  async findOneById(id: string): Promise<ProductDto> {
+    const item = await this.ProductDto.findOne({ _id: id }).exec();
+    return productInterfaceToDto(item);
   }
 
-  async findAll(where={}): Promise<ProductModel[]> {
-    const items = await this.productModel.find(where).exec();
-    return items.map(item => productInterfaceToModel(item))
+  async findAll(where = {}): Promise<ProductDto[]> {
+    const items = await this.ProductDto.find(where).exec();
+    return items.map(item => productInterfaceToDto(item))
   }
 
   async remove(id: string): Promise<boolean> {
-    await this.productModel.findByIdAndRemove(id);
+    await this.ProductDto.findByIdAndRemove(id);
     return true;
   }
 }
