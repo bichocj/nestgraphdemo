@@ -14,13 +14,13 @@ export function restaurantInterfaceToDto(restaurantInterface: RestaurantInterfac
 }
 
 export function productInputToDto(productInput: ProductInput): ProductDto {
-  const { name, description, price, cost, restaurantId, categoryId } = productInput;
-  return new ProductDto({ name, description, price, cost, restaurantId, categoryId });
+  const { name, description, price, cost, restaurantId, categoryId, extras } = productInput;
+  return new ProductDto({ name, description, price, cost, restaurantId, categoryId, extras });
 }
 
 export function productInterfaceToDto(productInterface: ProductInterface): ProductDto {
-  const { id, name, description, price, cost, restaurantId, categoryId } = productInterface;
-  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId });
+  const { id, name, description, price, cost, restaurantId, categoryId, extras } = productInterface;
+  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId, extras });
 }
 
 export function categoryInputToDto(categoryInput: CategoryInput): CategoryDto {

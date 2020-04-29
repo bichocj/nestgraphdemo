@@ -17,7 +17,8 @@ export class ProductDto {
   cost: number;
   restaurantId: string;
   categoryId: string;
-  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId }) {
+  extras: [];
+  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId, extras }) {
     if (id) {
       this.id = id;
     }
@@ -27,6 +28,7 @@ export class ProductDto {
     this.cost = cost;
     this.restaurantId = restaurantId;
     this.categoryId = categoryId;
+    this.extras = extras;
   }
 
 }

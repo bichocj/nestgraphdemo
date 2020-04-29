@@ -11,6 +11,7 @@ export interface ProductInterface extends Document {
   readonly cost: number,
   readonly restaurantId: string,
   readonly categoryId: string,
+  readonly extras: [],
 }
 
 export interface RestaurantInterface extends Document {

@@ -19,7 +19,17 @@ export const ProductSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
     required: true
-  }
+  },
+  extras: [
+    {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+      price: Number
+    }
+  ]
 });
 
 export const RestaurantSchema = new mongoose.Schema({

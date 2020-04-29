@@ -28,8 +28,6 @@ export class RestaurantsService {
   }
 
   async findAll(where={}): Promise<RestaurantDto[]> {
-    console.log('where')
-    console.log(where)
     const items = await this.entity.find(where).exec();
     return items.map(item => restaurantInterfaceToDto(item))
   }

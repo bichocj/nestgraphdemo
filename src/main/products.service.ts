@@ -7,32 +7,32 @@ import { productInterfaceToDto } from './dto/transformers';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel('Product') private entity: Model<ProductInterface>) { }
+  constructor(@InjectModel('Product') private productInterface: Model<ProductInterface>) { }
 
   async create(data: ProductDto): Promise<ProductDto> {
-    let created = new this.entity(data);
+    let created = new this.productInterface(data);
     created = await created.save();
     const product = productInterfaceToDto(created);
     return product;
   }
 
   async update(_id: string, data: ProductDto): Promise<ProductDto> {
-    const updatedProduct = await this.entity.findOneAndUpdate({ _id }, data, { new: true });
+    const updatedProduct = await this.productInterface.findOneAndUpdate({ _id }, data, { new: true });
     return productInterfaceToDto(updatedProduct);
   }
 
   async findOneById(id: string): Promise<ProductDto> {
-    const item = await this.entity.findOne({ _id: id }).exec();
+    const item = await this.productInterface.findOne({ _id: id }).exec();
     return productInterfaceToDto(item);
   }
 
   async findAll(where = {}): Promise<ProductDto[]> {
-    const items = await this.entity.find(where).exec();
+    const items = await this.productInterface.find(where).exec();
     return items.map(item => productInterfaceToDto(item))
   }
 
   async remove(id: string): Promise<boolean> {
-    await this.entity.findByIdAndRemove(id);
+    await this.productInterface.findByIdAndRemove(id);
     return true;
   }
 }

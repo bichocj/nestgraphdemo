@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestj
 
 import { ProductsService } from './products.service';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
-import { Product, Restaurant } from './dto/graphql/outputs';
+import { Product, Restaurant, ProductExtra } from './dto/graphql/outputs';
 import { ProductInput } from './dto/graphql/inputs';
 import { productInputToDto } from './dto/transformers';
 import { RestaurantDataLoader } from './dataloaders';
@@ -14,7 +14,7 @@ export class ProductsResolver {
   constructor(
     private readonly productsService: ProductsService,
     private readonly restaurantDataLoader: RestaurantDataLoader
-    ) { }
+  ) { }
 
   @Query(returns => Product)
   async product(@Args('id') id: string): Promise<Product> {
@@ -34,11 +34,11 @@ export class ProductsResolver {
   async addProduct(
     @Args('productInput') productInput: ProductInput,
   ): Promise<Product> {
-    const data = productInputToDto(productInput);
+    const data = productInputToDto(productInput);    
     const product = await this.productsService.create(data);
     return product;
   }
-  
+
   @Mutation(returns => Product)
   async updateProduct(
     @Args('id') id: string,
@@ -49,7 +49,24 @@ export class ProductsResolver {
     return product;
   }
 
-  
+  @ResolveProperty("extras", () => [ProductExtra])
+  async extras(@Parent() product: ProductDto): Promise<ProductExtra[]> {
+    const { extras } = product;
+    const productsIds = extras.map(extra => extra['productId'])
+    const items = await this.productsService.findAll({ '_id': { $in: productsIds } });
+    const productExtras = [];
+    items.forEach(item => {
+      const { price } = extras.find(e => e['productId'] == item.id)
+      const productExtra: ProductExtra = new ProductExtra();
+      productExtra.productId = item.id;
+      productExtra.name = item.name;
+      productExtra.price = price
+      productExtras.push(productExtra);
+    })
+    return productExtras;
+  }
+
+
   @ResolveProperty("restaurant", () => Restaurant)
   async restaurant(@Parent() product: ProductDto): Promise<Restaurant> {
     const { restaurantId } = product;

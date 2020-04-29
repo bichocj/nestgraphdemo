@@ -19,6 +19,15 @@ export class CategoryInput {
   name: string;
 }
 
+@InputType()
+export class ProductExtraInput {
+  @Field(type => ID)
+  productId: string;
+
+  @Field(type => Float)
+  price: number;
+}
+
 
 @InputType()
 export class ProductInput {
@@ -41,4 +50,7 @@ export class ProductInput {
 
   @Field(type => ID)
   categoryId: string;
+
+  @Field(type => [ProductExtraInput])
+  extras?: ProductExtraInput[];
 }

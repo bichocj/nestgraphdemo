@@ -20,6 +20,12 @@ type Category {
   name: String!
 }
 
+type ProductExtra {
+  productId: ID!
+  name: String!
+  price: Float!
+}
+
 type Product {
   id: ID!
   name: String!
@@ -29,6 +35,7 @@ type Product {
   restaurantId: ID!
   categoryId: ID!
   restaurant: Restaurant!
+  extras: [ProductExtra!]
 }
 
 type Query {
@@ -56,6 +63,12 @@ input ProductInput {
   cost: Float!
   restaurantId: ID!
   categoryId: ID!
+  extras: [ProductExtraInput!]!
+}
+
+input ProductExtraInput {
+  productId: ID!
+  price: Float!
 }
 
 input RestaurantInput {
