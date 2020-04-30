@@ -11,7 +11,7 @@ import { restaurantInputToDto } from '../dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/services/products.service';
 import { OwnerDataLoader } from './dataloaders';
-import { GqlAuthGuard } from 'src/auth/gql-autt-guard';
+import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { CurrentUser } from 'src/auth/decorators';
 
 @Resolver(of => Restaurant)

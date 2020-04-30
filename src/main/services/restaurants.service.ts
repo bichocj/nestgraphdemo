@@ -24,10 +24,13 @@ export class RestaurantsService {
 
   async findOneById(id: string): Promise<RestaurantDto> {
     const item = await this.entity.findOne({ _id: id }).exec();
-    return restaurantInterfaceToDto(item);
+    if (item) {
+      return restaurantInterfaceToDto(item);
+    }
+    return null;
   }
 
-  async findAll(where={}): Promise<RestaurantDto[]> {
+  async findAll(where = {}): Promise<RestaurantDto[]> {
     const items = await this.entity.find(where).exec();
     return items.map(item => restaurantInterfaceToDto(item))
   }

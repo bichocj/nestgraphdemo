@@ -35,9 +35,12 @@ type Product {
   price: Float!
   cost: Float!
   restaurantId: ID!
-  categoryId: ID!
   restaurant: Restaurant!
+  categoryId: ID!
+  category: Category!
   extras: [ProductExtra!]
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 type Query {
@@ -50,8 +53,9 @@ type Query {
 }
 
 type Mutation {
-  addProduct(productInput: ProductInput!): Product!
-  updateProduct(productInput: ProductInput!, id: String!): Product!
+  addProduct(input: ProductInput!): Product!
+  updateProduct(input: ProductInput!, id: String!): Product!
+  removeProduct(id: String!): Boolean!
   addRestaurant(restaurantInput: RestaurantInput!): Restaurant!
   updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
   addCategory(input: CategoryInput!): Category!
@@ -68,6 +72,8 @@ input ProductInput {
   restaurantId: ID!
   categoryId: ID!
   extras: [ProductExtraInput!]!
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 input ProductExtraInput {

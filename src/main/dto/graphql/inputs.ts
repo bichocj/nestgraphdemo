@@ -28,6 +28,12 @@ export class CategoryInput {
   @Field()
   @MaxLength(30)
   name: string;
+
+  @Field(type => Boolean)
+  isActive: boolean;
+
+  @Field(type => Boolean)
+  isPublished: boolean;
 }
 
 @InputType()
@@ -64,4 +70,11 @@ export class ProductInput {
 
   @Field(type => [ProductExtraInput])
   extras?: ProductExtraInput[];
+
+  
+  @Field(type => Boolean)
+  isActive: boolean;
+
+  @Field(type => Boolean)
+  isPublished: boolean;
 }

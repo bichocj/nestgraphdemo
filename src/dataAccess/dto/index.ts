@@ -1,11 +1,15 @@
 export class CategoryDto {
   id: string;
   name: string;
-  constructor({ id = undefined, name }) {
+  isActive: boolean;
+  isPublished: boolean;
+  constructor({ id = undefined, name, isActive=true, isPublished=true }) {
     if (id) {
       this.id = id;
     }
     this.name = name;
+    this.isActive = isActive;
+    this.isPublished = isPublished;
   }
 }
 
@@ -17,8 +21,10 @@ export class ProductDto {
   cost: number;
   restaurantId: string;
   categoryId: string;
-  extras: [];
-  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId, extras }) {
+  extras: [];  
+  isActive: boolean;
+  isPublished: boolean;
+  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId, extras, isActive=true, isPublished=true }) {
     if (id) {
       this.id = id;
     }
@@ -29,6 +35,9 @@ export class ProductDto {
     this.restaurantId = restaurantId;
     this.categoryId = categoryId;
     this.extras = extras;
+    
+    this.isActive = isActive;
+    this.isPublished = isPublished;
   }
 
 }

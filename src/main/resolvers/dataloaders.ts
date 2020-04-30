@@ -4,8 +4,9 @@ export interface IDataLoader<K, V> {
 
 import DataLoader from 'dataloader';
 import { ProductsService } from '../services/products.service';
-import { User, Restaurant } from '../dto/graphql/outputs';
+import { User, Restaurant, Category } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
+import { CategoriesService } from '../services/categories.service';
 
 export class OwnerDataLoader implements IDataLoader<string, User> {
   constructor(private readonly dataLoader: DataLoader<string, User>) { }
@@ -39,6 +40,23 @@ export class RestaurantDataLoader implements IDataLoader<string, Restaurant> {
     });
 
     return new RestaurantDataLoader(dataLoader);
+  }
+
+  public async load(id: string) {
+    return this.dataLoader.load(id);
+  }
+}
+
+export class CategoryDataLoader implements IDataLoader<string, Category> {
+  constructor(private readonly dataLoader: DataLoader<string, Category>) { }
+
+  public static async create(service: CategoriesService): Promise<CategoryDataLoader> {
+    const dataLoader = new DataLoader<string, Category>(async keys => {
+      const loadedEntities = await service.findAll({ '_id': { $in: keys } });
+      return keys.map(key => loadedEntities.find(entity => `${entity.id}` === `${key}`));
+    });
+
+    return new CategoryDataLoader(dataLoader);
   }
 
   public async load(id: string) {

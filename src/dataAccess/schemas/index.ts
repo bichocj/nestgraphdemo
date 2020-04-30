@@ -41,7 +41,9 @@ export const ProductSchema = new mongoose.Schema({
       },
       price: Number
     }
-  ]
+  ],
+  isActive: Boolean,
+  isPublished: Boolean,
 });
 
 export const RestaurantSchema = new mongoose.Schema({

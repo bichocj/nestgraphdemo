@@ -5,11 +5,13 @@ export interface UserInterface extends Document {
   readonly password: string,
 }
 
-export interface CategoryInterface extends Document {
+export interface CategoryDocument extends Document {
   readonly name: string,
+  readonly isActive: boolean;
+  readonly isPublished: boolean;
 }
 
-export interface ProductInterface extends Document {
+export interface ProductDocument extends Document {
   readonly name: string,
   readonly description: string,
   readonly price: number,
@@ -17,6 +19,8 @@ export interface ProductInterface extends Document {
   readonly restaurantId: string,
   readonly categoryId: string,
   readonly extras: [],
+  readonly isActive: boolean;
+  readonly isPublished: boolean;
 }
 
 export interface RestaurantInterface extends Document {

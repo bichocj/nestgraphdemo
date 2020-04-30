@@ -39,10 +39,15 @@ export class Category {
   @Field()
   name: string;
 
+  @Field()
+  isActive: boolean;
+
+  @Field()
+  isPublished: boolean;
 }
 
 @ObjectType()
-export class ProductExtra {  
+export class ProductExtra {
   @Field(type => ID)
   productId: string;
 
@@ -72,13 +77,22 @@ export class Product {
 
   @Field(type => ID)
   restaurantId: string;
+  
+  @Field(type => Restaurant)
+  restaurant?: object;
 
   @Field(type => ID)
   categoryId: string;
 
-  @Field(type => Restaurant)
-  restaurant?: string;
+  @Field(type => Category)
+  category?: object;
 
   @Field(type => [ProductExtra], { defaultValue: [] })
   extras?: ProductExtra[]
+
+  @Field()
+  isActive: boolean;
+
+  @Field()
+  isPublished: boolean;
 }

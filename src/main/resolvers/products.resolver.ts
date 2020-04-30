@@ -1,19 +1,26 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
 import { ProductsService } from '../services/products.service';
+import { CategoriesService } from '../services/categories.service';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { Product, Restaurant, ProductExtra } from '../dto/graphql/outputs';
 import { ProductInput } from '../dto/graphql/inputs';
 import { productInputToDto } from '../dto/transformers';
-import { RestaurantDataLoader } from './dataloaders';
+import { RestaurantDataLoader, CategoryDataLoader } from './dataloaders';
 import { ProductDto } from 'src/dataAccess/dto';
+import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
+import { RestaurantsService } from '../services/restaurants.service';
 
 @Resolver(of => Product)
+@UseGuards(GqlAuthGuard)
 export class ProductsResolver {
   constructor(
     private readonly productsService: ProductsService,
-    private readonly restaurantDataLoader: RestaurantDataLoader
+    private readonly categoriesService: CategoriesService,
+    private readonly restaurantsService: RestaurantsService,
+    private readonly restaurantDataLoader: RestaurantDataLoader,
+    private readonly categoryDataLoader: CategoryDataLoader
   ) { }
 
   @Query(returns => Product)
@@ -32,9 +39,10 @@ export class ProductsResolver {
 
   @Mutation(returns => Product)
   async addProduct(
-    @Args('productInput') productInput: ProductInput,
+    @Args('input') input: ProductInput,
   ): Promise<Product> {
-    const data = productInputToDto(productInput);    
+    const data = productInputToDto(input);
+    await this.validateRelations(data);
     const product = await this.productsService.create(data);
     return product;
   }
@@ -42,12 +50,20 @@ export class ProductsResolver {
   @Mutation(returns => Product)
   async updateProduct(
     @Args('id') id: string,
-    @Args('productInput') productInput: ProductInput,
+    @Args('input') input: ProductInput,
   ): Promise<Product> {
-    const data = productInputToDto(productInput);
+    const data = productInputToDto(input);
+    await this.validateRelations(data);
     const product = await this.productsService.update(id, data);
     return product;
   }
+
+  @Mutation(returns => Boolean)
+  async removeProduct(@Args('id') id: string) {
+    // TODO validate if no have relation with some order
+    return this.productsService.remove(id);
+  }
+
 
   @ResolveProperty("extras", () => [ProductExtra])
   async extras(@Parent() product: ProductDto): Promise<ProductExtra[]> {
@@ -72,13 +88,24 @@ export class ProductsResolver {
     const { restaurantId } = product;
     return this.restaurantDataLoader.load(restaurantId);
   }
-  // @Mutation(returns => Boolean)
-  // async removeProduct(@Args('id') id: string) {
-  //   return this.productsService.remove(id);
-  // }
 
-  // @Subscription(returns => Product)
-  // productAdded() {
-  //   return pubSub.asyncIterator('productAdded');
-  // }
+  @ResolveProperty("category", () => Restaurant)
+  async category(@Parent() product: ProductDto): Promise<Restaurant> {
+    const { categoryId } = product;
+    return this.categoryDataLoader.load(categoryId);
+  }
+
+  async validateRelations(data: ProductInput) {
+    const category = await this.categoriesService.findOneById(data.categoryId);
+    const restaurant = await this.restaurantsService.findOneById(data.restaurantId);
+    if (restaurant === null) {
+      throw Error('el restaurante indicado no existe');
+    }
+    if (category === null) {
+      throw Error('la categoria indicada no existe');
+    }
+    if (!category.isActive) {
+      throw Error('la categoria indicada no esta activa');
+    }
+  }
 }
