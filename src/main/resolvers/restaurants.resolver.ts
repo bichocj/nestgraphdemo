@@ -4,13 +4,13 @@ import { Args, Mutation, Query, Resolver, Subscription, Parent, ResolveField, Re
 // import { RestaurantsArgs } from './dto/restaurants.args';
 
 
-import { RestaurantInput } from './dto/graphql/inputs';
-import { Restaurant, User } from './dto/graphql/outputs';
-import { RestaurantsService } from './services/restaurants.service';
-import { restaurantInputToDto } from './dto/transformers';
+import { RestaurantInput } from '../dto/graphql/inputs';
+import { Restaurant, User } from '../dto/graphql/outputs';
+import { RestaurantsService } from '../services/restaurants.service';
+import { restaurantInputToDto } from '../dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/services/products.service';
-import { OwnerDataLoader } from './resolvers/dataloaders';
+import { OwnerDataLoader } from './dataloaders';
 import { GqlAuthGuard } from 'src/auth/gql-autt-guard';
 import { CurrentUser } from 'src/auth/decorators';
 

@@ -1,12 +1,12 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
-import { ProductsService } from './services/products.service';
+import { ProductsService } from '../services/products.service';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
-import { Product, Restaurant, ProductExtra } from './dto/graphql/outputs';
-import { ProductInput } from './dto/graphql/inputs';
-import { productInputToDto } from './dto/transformers';
-import { RestaurantDataLoader } from './resolvers/dataloaders';
+import { Product, Restaurant, ProductExtra } from '../dto/graphql/outputs';
+import { ProductInput } from '../dto/graphql/inputs';
+import { productInputToDto } from '../dto/transformers';
+import { RestaurantDataLoader } from './dataloaders';
 import { ProductDto } from 'src/dataAccess/dto';
 
 @Resolver(of => Product)

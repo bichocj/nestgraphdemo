@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserInterface } from 'src/dataAccess/interfaces';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { userInterfaceToDto } from './dto/transformers';
+import { userInterfaceToDto } from '../dto/transformers';
 import { UserDto } from 'src/dataAccess/dto';
 
 export type User = any;

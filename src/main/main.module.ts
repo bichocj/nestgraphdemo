@@ -1,16 +1,16 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { Module, Scope } from '@nestjs/common';
 
-import { ProductsService } from './products.service';
-import { ProductsResolver } from './products.resolver';
+import { ProductsService } from './services/products.service';
+import { ProductsResolver } from './resolvers/products.resolver';
 import { ProductSchema, RestaurantSchema, CategorySchema, UserSchema } from '../dataAccess/schemas';
-import { RestaurantsResolver } from './restaurants.resolver';
-import { RestaurantsService } from './restaurants.service';
-import { OwnerDataLoader, RestaurantDataLoader } from './dataloaders';
-import { CategoriesResolver } from './categories.resolvers';
-import { CategoriesService } from './categories.service';
-import { UsersService } from './users.service';
-import { UsersResolver } from './users.resolvers';
+import { RestaurantsResolver } from './resolvers/restaurants.resolver';
+import { RestaurantsService } from './services/restaurants.service';
+import { OwnerDataLoader, RestaurantDataLoader } from './resolvers/dataloaders';
+import { CategoriesResolver } from './resolvers/categories.resolvers';
+import { CategoriesService } from './services/categories.service';
+import { UsersService } from './services/users.service';
+import { UsersResolver } from './resolvers/users.resolvers';
 @Module({
   imports: [MongooseModule.forFeature([
     { name: 'User', schema: UserSchema },

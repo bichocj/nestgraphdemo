@@ -2,12 +2,12 @@ import * as mongoose from 'mongoose';
 
 
 export const UserSchema = new mongoose.Schema({
-  username: String,
+  username: { type: String, unique: true, required: true},
   password: String
 });
 
 export const CategorySchema = new mongoose.Schema({
-  name: String
+  name: { type: String, unique: true, required: true},
 });
 
 export const ProductSchema = new mongoose.Schema({

@@ -44,7 +44,7 @@ type Query {
   restaurant(id: String!): Restaurant!
   restaurants(skip: Int = 0, take: Int = 25): [Restaurant!]!
   category(id: String!): Category!
-  categorys(skip: Int = 0, take: Int = 25): [Category!]!
+  categories(skip: Int = 0, take: Int = 25): [Category!]!
 }
 
 type Mutation {
@@ -52,8 +52,9 @@ type Mutation {
   updateProduct(productInput: ProductInput!, id: String!): Product!
   addRestaurant(restaurantInput: RestaurantInput!): Restaurant!
   updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
-  addCategory(categoryInput: CategoryInput!): Category!
-  updateCategory(categoryInput: CategoryInput!, id: String!): Category!
+  addCategory(input: CategoryInput!): Category!
+  updateCategory(input: CategoryInput!, id: String!): Category!
+  removeCategory(id: String!): Boolean!
   addUser(userInput: UserInput!): User!
 }
 

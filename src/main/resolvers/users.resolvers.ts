@@ -1,8 +1,8 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { UsersService } from './users.service';
-import { User } from './dto/graphql/outputs';
-import { UserInput } from './dto/graphql/inputs';
-import { userInputToDto } from './dto/transformers';
+import { UsersService } from '../services/users.service';
+import { User } from '../dto/graphql/outputs';
+import { UserInput } from '../dto/graphql/inputs';
+import { userInputToDto } from '../dto/transformers';
 import * as bcryptjs from 'bcryptjs';
 
 @Resolver(of => User)

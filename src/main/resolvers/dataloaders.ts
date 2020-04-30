@@ -3,9 +3,9 @@ export interface IDataLoader<K, V> {
 }
 
 import DataLoader from 'dataloader';
-import { ProductsService } from './products.service';
-import { User, Restaurant } from './dto/graphql/outputs';
-import { RestaurantsService } from './restaurants.service';
+import { ProductsService } from '../services/products.service';
+import { User, Restaurant } from '../dto/graphql/outputs';
+import { RestaurantsService } from '../services/restaurants.service';
 
 export class OwnerDataLoader implements IDataLoader<string, User> {
   constructor(private readonly dataLoader: DataLoader<string, User>) { }
