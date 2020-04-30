@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription, Parent, ResolveField, ResolveProperty } from '@nestjs/graphql';
 // import { PubSub } from 'apollo-server-express';
 // import { RestaurantsArgs } from './dto/restaurants.args';
@@ -11,6 +11,8 @@ import { restaurantInputToDto } from './dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/products.service';
 import { OwnerDataLoader } from './dataloaders';
+import { GqlAuthGuard } from 'src/auth/gql-autt-guard';
+import { CurrentUser } from 'src/auth/decorators';
 
 @Resolver(of => Restaurant)
 export class RestaurantsResolver {
@@ -29,8 +31,14 @@ export class RestaurantsResolver {
     return restaurant;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(returns => [Restaurant])
-  restaurants(@Args() data: PaginationInput): Promise<Restaurant[]> {
+  restaurants(
+    @Args() data: PaginationInput,
+    @CurrentUser() user: User
+  ): Promise<Restaurant[]> {
+    console.log('user')
+    console.log(user)
     return this.restaurantsService.findAll();
   }
 
@@ -68,7 +76,7 @@ export class RestaurantsResolver {
     const { id } = restaurant;
     return this.productsService.findAll({ restaurantId: id });
   }
-  
+
   @ResolveProperty("owner", () => User)
   async owner(@Parent() restaurant: Restaurant): Promise<User> {
     const { id } = restaurant;
