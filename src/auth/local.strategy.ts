@@ -17,7 +17,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     username: string,
     password: string,
   ) {
-    console.log('LocalStrategy call validate')
     const contextId = ContextIdFactory.getByRequest(request);
     // "AuthService" is a request-scoped provider
     const authService = await this.moduleRef.resolve(AuthService, contextId);
@@ -27,17 +26,4 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
     return user;
   }
-
-  // constructor(private authService: AuthService) {
-  //   super();
-  // }
-
-  // async validate(username: string, password: string): Promise<any> {
-  //   console.log('LocalStrategy validate')
-  //   const user = await this.authService.validateUser(username, password);
-  //   if (!user) {
-  //     throw new UnauthorizedException();
-  //   }
-  //   return user;
-  // }
 }

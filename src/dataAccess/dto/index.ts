@@ -50,11 +50,14 @@ export class RestaurantDto {
 export class UserDto {
   id: string;
   username: string;
-  constructor({ id = undefined, username }) {
+  password: string;
+
+  constructor({ id = undefined, username, password = undefined }) {
     if (id) {
       this.id = id;
     }
     this.username = username;
+    this.password = password;
   }
 
 }

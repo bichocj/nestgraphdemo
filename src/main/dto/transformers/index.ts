@@ -1,6 +1,6 @@
-import { ProductInterface, RestaurantInterface, CategoryInterface } from "src/dataAccess/interfaces";
-import { RestaurantInput, ProductInput, CategoryInput } from "../graphql/inputs";
-import { ProductDto, RestaurantDto, CategoryDto } from "src/dataAccess/dto";
+import { ProductInterface, RestaurantInterface, CategoryInterface, UserInterface } from "src/dataAccess/interfaces";
+import { UserInput, RestaurantInput, ProductInput, CategoryInput } from "../graphql/inputs";
+import { ProductDto, RestaurantDto, CategoryDto, UserDto } from "src/dataAccess/dto";
 
 
 export function restaurantInputToDto(restaurantInput: RestaurantInput): RestaurantDto {
@@ -31,4 +31,15 @@ export function categoryInputToDto(categoryInput: CategoryInput): CategoryDto {
 export function categoryInterfaceToDto(categoryInterface: CategoryInterface): CategoryDto {
   const { id, name } = categoryInterface;
   return new CategoryDto({ id, name });
+}
+
+
+export function userInputToDto(userInput: UserInput): UserDto {
+  const { username, password } = userInput;
+  return new UserDto({ id: undefined, username, password });
+}
+
+export function userInterfaceToDto(userInterface: UserInterface): UserDto {
+  const { id, username, password } = userInterface;
+  return new UserDto({ id, username, password });
 }

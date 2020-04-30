@@ -36,9 +36,7 @@ export class RestaurantsResolver {
   restaurants(
     @Args() data: PaginationInput,
     @CurrentUser() user: User
-  ): Promise<Restaurant[]> {
-    console.log('user')
-    console.log(user)
+  ): Promise<Restaurant[]> {    
     return this.restaurantsService.findAll();
   }
 

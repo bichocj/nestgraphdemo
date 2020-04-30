@@ -54,6 +54,7 @@ type Mutation {
   updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
   addCategory(categoryInput: CategoryInput!): Category!
   updateCategory(categoryInput: CategoryInput!, id: String!): Category!
+  addUser(userInput: UserInput!): User!
 }
 
 input ProductInput {
@@ -78,4 +79,9 @@ input RestaurantInput {
 
 input CategoryInput {
   name: String!
+}
+
+input UserInput {
+  username: String!
+  password: String!
 }
