@@ -18,6 +18,8 @@ type Restaurant {
 type Category {
   id: ID!
   name: String!
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 type ProductExtra {
@@ -80,6 +82,8 @@ input RestaurantInput {
 
 input CategoryInput {
   name: String!
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 input UserInput {

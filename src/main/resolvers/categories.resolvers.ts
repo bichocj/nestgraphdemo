@@ -6,12 +6,15 @@ import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { Category } from '../dto/graphql/outputs';
 import { CategoryInput } from '../dto/graphql/inputs';
 import { categoryInputToDto } from '../dto/transformers';
-import { GqlAuthGuard } from 'src/auth/gql-autt-guard';
+import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
+import { ProductsService } from '../services/products.service';
 
 @Resolver(of => Category)
 @UseGuards(GqlAuthGuard)
 export class CategoriesResolver {
-  constructor(private readonly categoriesService: CategoriesService) { }
+  constructor(
+    private readonly categoriesService: CategoriesService,
+    private readonly productsService: ProductsService) { }
 
   @Query(returns => Category)
   async category(@Args('id') id: string): Promise<Category> {
@@ -29,9 +32,9 @@ export class CategoriesResolver {
 
   @Mutation(returns => Category)
   async addCategory(
-    @Args('input') categoryInput: CategoryInput,
+    @Args('input') input: CategoryInput,
   ): Promise<Category> {
-    const data = categoryInputToDto(categoryInput);
+    const data = categoryInputToDto(input);
     const category = await this.categoriesService.create(data);
     return category;
   }
@@ -39,16 +42,20 @@ export class CategoriesResolver {
   @Mutation(returns => Category)
   async updateCategory(
     @Args('id') id: string,
-    @Args('input') categoryInput: CategoryInput,
+    @Args('input') input: CategoryInput,
   ): Promise<Category> {
-    const data = categoryInputToDto(categoryInput);
+    const data = categoryInputToDto(input);
     const category = await this.categoriesService.update(id, data);
     return category;
   }
 
   @Mutation(returns => Boolean)
   async removeCategory(@Args('id') id: string) {
-    return this.categoriesService.remove(id);
+    const products = await this.productsService.findAll({ categoryId: id });
+    if (products.length === 0) {
+      return this.categoriesService.remove(id);
+    }
+    throw Error('No puede ser eliminado porque tiene productos asociados');
   }
 
 }
