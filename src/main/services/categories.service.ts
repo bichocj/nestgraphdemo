@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CategoryDocument } from '../../dataAccess/interfaces';
 import { CategoryDto } from '../../dataAccess/dto';
-import { categoryInterfaceToDto } from '../dto/transformers';
+import { categoryDocumentToDto } from '../dto/transformers';
 
 
 @Injectable()
@@ -13,26 +13,26 @@ export class CategoriesService {
   async create(data: CategoryDto): Promise<CategoryDto> {
     let created = new this.entity(data);
     created = await created.save();
-    const restaurant = categoryInterfaceToDto(created);
+    const restaurant = categoryDocumentToDto(created);
     return restaurant;
   }
 
   async update(_id: string, data: CategoryDto): Promise<CategoryDto> {
     const updatedCategory = await this.entity.findOneAndUpdate({ _id }, data, { new: true });
-    return categoryInterfaceToDto(updatedCategory);
+    return categoryDocumentToDto(updatedCategory);
   }
 
   async findOneById(id: string): Promise<CategoryDto> {
     const item = await this.entity.findOne({ _id: id }).exec();
     if (item) {
-      return categoryInterfaceToDto(item);
+      return categoryDocumentToDto(item);
     }
     return null;
   }
 
   async findAll(where={}): Promise<CategoryDto[]> {
     const items = await this.entity.find(where).exec();
-    return items.map(item => categoryInterfaceToDto(item))
+    return items.map(item => categoryDocumentToDto(item))
   }
 
   async remove(id: string): Promise<boolean> {

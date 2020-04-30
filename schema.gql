@@ -13,6 +13,8 @@ type Restaurant {
   address: String
   products: [Product!]!
   owner: User
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 type Category {
@@ -56,8 +58,9 @@ type Mutation {
   addProduct(input: ProductInput!): Product!
   updateProduct(input: ProductInput!, id: String!): Product!
   removeProduct(id: String!): Boolean!
-  addRestaurant(restaurantInput: RestaurantInput!): Restaurant!
-  updateRestaurant(restaurantInput: RestaurantInput!, id: String!): Restaurant!
+  addRestaurant(input: RestaurantInput!): Restaurant!
+  updateRestaurant(input: RestaurantInput!, id: String!): Restaurant!
+  removeRestaurant(id: String!): Boolean!
   addCategory(input: CategoryInput!): Category!
   updateCategory(input: CategoryInput!, id: String!): Category!
   removeCategory(id: String!): Boolean!
@@ -84,6 +87,8 @@ input ProductExtraInput {
 input RestaurantInput {
   name: String!
   address: String
+  isActive: Boolean!
+  isPublished: Boolean!
 }
 
 input CategoryInput {

@@ -28,6 +28,11 @@ export class Restaurant {
   @Field(type => User, { nullable: true })
   owner?: User;
 
+  @Field(type => Boolean)
+  isActive: boolean;
+
+  @Field(type => Boolean)
+  isPublished: boolean;
 }
 
 

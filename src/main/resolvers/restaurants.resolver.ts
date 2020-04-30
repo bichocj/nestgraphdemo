@@ -1,9 +1,5 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Subscription, Parent, ResolveField, ResolveProperty } from '@nestjs/graphql';
-// import { PubSub } from 'apollo-server-express';
-// import { RestaurantsArgs } from './dto/restaurants.args';
-
-
+import { Args, Mutation, Query, Resolver, Parent, ResolveField, ResolveProperty } from '@nestjs/graphql';
 import { RestaurantInput } from '../dto/graphql/inputs';
 import { Restaurant, User } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
@@ -15,6 +11,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { CurrentUser } from 'src/auth/decorators';
 
 @Resolver(of => Restaurant)
+@UseGuards(GqlAuthGuard)
 export class RestaurantsResolver {
   constructor(
     private readonly restaurantsService: RestaurantsService,
@@ -31,7 +28,6 @@ export class RestaurantsResolver {
     return restaurant;
   }
 
-  @UseGuards(GqlAuthGuard)
   @Query(returns => [Restaurant])
   restaurants(
     @Args() data: PaginationInput,
@@ -42,9 +38,9 @@ export class RestaurantsResolver {
 
   @Mutation(returns => Restaurant)
   async addRestaurant(
-    @Args('restaurantInput') restaurantInput: RestaurantInput,
+    @Args('input') input: RestaurantInput,
   ): Promise<Restaurant> {
-    const data = restaurantInputToDto(restaurantInput);
+    const data = restaurantInputToDto(input);
     const restaurant = await this.restaurantsService.create(data);
     return restaurant;
   }
@@ -52,23 +48,18 @@ export class RestaurantsResolver {
   @Mutation(returns => Restaurant)
   async updateRestaurant(
     @Args('id') id: string,
-    @Args('restaurantInput') restaurantInput: RestaurantInput,
+    @Args('input') input: RestaurantInput,
   ): Promise<Restaurant> {
-    const data = restaurantInputToDto(restaurantInput);
+    const data = restaurantInputToDto(input);
     const restaurant = await this.restaurantsService.update(id, data);
     return restaurant;
   }
 
-  // @Mutation(returns => Boolean)
-  // async removeRestaurant(@Args('id') id: string) {
-  //   return this.restaurantsService.remove(id);
-  // }
-
-  // @Subscription(returns => Restaurant)
-  // restaurantAdded() {
-  //   return pubSub.asyncIterator('restaurantAdded');
-  // }
-
+  @Mutation(returns => Boolean)
+  async removeRestaurant(@Args('id') id: string) {
+    return this.restaurantsService.remove(id);
+  }
+  
   @ResolveField()
   async products(@Parent() restaurant: Restaurant) {
     const { id } = restaurant;

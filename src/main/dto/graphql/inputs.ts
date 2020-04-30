@@ -21,6 +21,12 @@ export class RestaurantInput {
   @Field({ nullable: true })
   @MaxLength(255)
   address?: string;
+
+  @Field(type => Boolean)
+  isActive: boolean;
+
+  @Field(type => Boolean)
+  isPublished: boolean;
 }
 
 @InputType()

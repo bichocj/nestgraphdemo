@@ -46,12 +46,17 @@ export class RestaurantDto {
   id: string;
   name: string;
   address: string;
-  constructor({ id = undefined, name, address }) {
+  isActive: boolean;
+  isPublished: boolean;
+  constructor({ id = undefined, name, address, isActive=true, isPublished=true }) {
     if (id) {
       this.id = id;
     }
     this.name = name;
     this.address = address;
+    
+    this.isActive = isActive;
+    this.isPublished = isPublished;
   }
 }
 

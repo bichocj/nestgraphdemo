@@ -48,6 +48,8 @@ export const ProductSchema = new mongoose.Schema({
 
 export const RestaurantSchema = new mongoose.Schema({
   name: { type: String, minlength: [6, messages['minlength']], maxlength: [20, messages['maxlength']], unique: true, required: true, trim: true },
-  address: { type: String, minlength: [6, messages['minlength']], maxlength: [200, messages['maxlength']], required: true, trim: true }
+  address: { type: String, minlength: [6, messages['minlength']], maxlength: [200, messages['maxlength']], required: true, trim: true },
+  isActive: Boolean,
+  isPublished: Boolean,
 });
 RestaurantSchema.plugin(uniqueValidator, { message: messages['unique'] });

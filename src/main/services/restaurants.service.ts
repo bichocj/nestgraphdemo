@@ -1,38 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RestaurantInterface } from '../../dataAccess/interfaces';
+import { RestaurantDocument } from '../../dataAccess/interfaces';
 import { RestaurantDto } from '../../dataAccess/dto';
-import { restaurantInterfaceToDto } from '../dto/transformers';
+import { restaurantDocumentToDto } from '../dto/transformers';
 
 
 @Injectable()
 export class RestaurantsService {
-  constructor(@InjectModel('Restaurant') private entity: Model<RestaurantInterface>) { }
+  constructor(@InjectModel('Restaurant') private entity: Model<RestaurantDocument>) { }
 
   async create(data: RestaurantDto): Promise<RestaurantDto> {
     let created = new this.entity(data);
     created = await created.save();
-    const restaurant = restaurantInterfaceToDto(created);
+    const restaurant = restaurantDocumentToDto(created);
     return restaurant;
   }
 
   async update(_id: string, data: RestaurantDto): Promise<RestaurantDto> {
     const updatedRestaurant = await this.entity.findOneAndUpdate({ _id }, data, { new: true });
-    return restaurantInterfaceToDto(updatedRestaurant);
+    return restaurantDocumentToDto(updatedRestaurant);
   }
 
   async findOneById(id: string): Promise<RestaurantDto> {
     const item = await this.entity.findOne({ _id: id }).exec();
     if (item) {
-      return restaurantInterfaceToDto(item);
+      return restaurantDocumentToDto(item);
     }
     return null;
   }
 
   async findAll(where = {}): Promise<RestaurantDto[]> {
     const items = await this.entity.find(where).exec();
-    return items.map(item => restaurantInterfaceToDto(item))
+    return items.map(item => restaurantDocumentToDto(item))
   }
 
   async remove(id: string): Promise<boolean> {

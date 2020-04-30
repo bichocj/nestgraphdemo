@@ -23,7 +23,9 @@ export interface ProductDocument extends Document {
   readonly isPublished: boolean;
 }
 
-export interface RestaurantInterface extends Document {
+export interface RestaurantDocument extends Document {
   readonly name: string,
-  readonly address: string
+  readonly address: string,  
+  readonly isActive: boolean;
+  readonly isPublished: boolean;
 }
