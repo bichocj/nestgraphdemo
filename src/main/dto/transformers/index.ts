@@ -8,9 +8,11 @@ export function restaurantInputToDto(restaurantInput: RestaurantInput): Restaura
   return new RestaurantDto({ name, address, isActive, isPublished });
 }
 
-export function restaurantDocumentToDto(restaurantInterface: RestaurantDocument): RestaurantDto {
-  const { id, name, address, isActive, isPublished } = restaurantInterface;
-  return new RestaurantDto({ id, name, address, isActive, isPublished });
+export function restaurantDocumentToDto(document: RestaurantDocument): RestaurantDto {
+  const { id, name, address, users, isActive, isPublished } = document;
+  const dto =  new RestaurantDto({ id, name, address, isActive, isPublished });
+  dto.users = users;
+  return dto;
 }
 
 export function productInputToDto(productInput: ProductInput): ProductDto {

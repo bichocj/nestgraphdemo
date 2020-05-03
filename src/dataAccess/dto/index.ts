@@ -42,10 +42,20 @@ export class ProductDto {
 
 }
 
+export class RestaurantUserDto {
+  userId: string;
+  rol: string;
+  constructor({userId, rol}){
+    this.userId = userId;
+    this.rol = rol;
+  }
+}
+
 export class RestaurantDto {
   id: string;
   name: string;
   address: string;
+  users: [any];
   isActive: boolean;
   isPublished: boolean;
   constructor({ id = undefined, name, address, isActive=true, isPublished=true }) {

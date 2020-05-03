@@ -28,4 +28,5 @@ export interface RestaurantDocument extends Document {
   readonly address: string,  
   readonly isActive: boolean;
   readonly isPublished: boolean;
+  readonly users: [any];
 }

@@ -18,11 +18,20 @@ export class UsersService {
     return user;
   }
 
-  async findOne(where = {}): Promise<UserDto | undefined> {
+  async findOne(where = {}): Promise<UserDto | null> {
     const user = await this.entity.findOne(where);
     if (user) {
       return userDocumentToDto(user);
     }
-    return undefined
+    return null;
+  }
+
+  async findOneById(_id: string): Promise<UserDto> {
+    return await this.findOne({ _id });
+  }
+
+  async findAll(where = {}): Promise<UserDto[]> {
+    const items = await this.entity.find(where).exec();
+    return items.map(item => userDocumentToDto(item))
   }
 }

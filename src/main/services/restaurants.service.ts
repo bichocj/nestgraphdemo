@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RestaurantDocument } from '../../dataAccess/interfaces';
-import { RestaurantDto } from '../../dataAccess/dto';
+import { RestaurantDto, RestaurantUserDto } from '../../dataAccess/dto';
 import { restaurantDocumentToDto } from '../dto/transformers';
 
 
@@ -37,6 +37,14 @@ export class RestaurantsService {
 
   async remove(id: string): Promise<boolean> {
     await this.entity.findByIdAndRemove(id);
+    return true;
+  }
+
+  async addUser(_id: string, restaurantUserDto: RestaurantUserDto): Promise<boolean> {
+    await this.entity.update(
+      { _id },
+      { $push: { users: restaurantUserDto } },
+    );
     return true;
   }
 }

@@ -1,14 +1,16 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Parent, ResolveField, ResolveProperty } from '@nestjs/graphql';
-import { RestaurantInput } from '../dto/graphql/inputs';
-import { Restaurant, User } from '../dto/graphql/outputs';
+import { RestaurantInput, RestaurantUserInput, UserRol } from '../dto/graphql/inputs';
+import { Restaurant, User, RestaurantUser } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
 import { restaurantInputToDto } from '../dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/services/products.service';
-import { OwnerDataLoader } from './dataloaders';
+import { OwnerDataLoader, UserDataLoader } from './dataloaders';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { CurrentUser } from 'src/auth/decorators';
+import { UsersService } from '../services/users.service';
+import { RestaurantUserDto } from 'src/dataAccess/dto';
 
 @Resolver(of => Restaurant)
 @UseGuards(GqlAuthGuard)
@@ -16,7 +18,9 @@ export class RestaurantsResolver {
   constructor(
     private readonly restaurantsService: RestaurantsService,
     private readonly productsService: ProductsService,
-    private readonly ownerDataLoader: OwnerDataLoader
+    private readonly usersService: UsersService,
+    private readonly ownerDataLoader: OwnerDataLoader,
+    private readonly userDataLoader: UserDataLoader
   ) { }
 
   @Query(returns => Restaurant)
@@ -32,7 +36,7 @@ export class RestaurantsResolver {
   restaurants(
     @Args() data: PaginationInput,
     @CurrentUser() user: User
-  ): Promise<Restaurant[]> {    
+  ): Promise<Restaurant[]> {
     return this.restaurantsService.findAll();
   }
 
@@ -59,7 +63,7 @@ export class RestaurantsResolver {
   async removeRestaurant(@Args('id') id: string) {
     return this.restaurantsService.remove(id);
   }
-  
+
   @ResolveField()
   async products(@Parent() restaurant: Restaurant) {
     const { id } = restaurant;
@@ -70,6 +74,42 @@ export class RestaurantsResolver {
   async owner(@Parent() restaurant: Restaurant): Promise<User> {
     const { id } = restaurant;
     return this.ownerDataLoader.load(restaurant.id);
+  }
+
+  @Mutation(returns => Boolean)
+  async addUserToRestaurant(@Args('input') input: RestaurantUserInput) {
+    const { userId, restaurantId, type } = input;
+
+    const restaurant = await this.restaurantsService.findOneById(restaurantId);
+    if (restaurant === null) {
+      throw Error('el restaurant indicado no existe')
+    }
+
+    const userExists = restaurant.users.find(u => `${u.userId}` === `${userId}`)
+    if (userExists) {
+      throw Error('el usuario ya esta agregado al restaurante')
+    }
+
+    const user = await this.usersService.findOneById(userId);
+    if (user === null) {
+      throw Error('el usuario indicado no existe')
+    }
+
+    const restaurantUserDto = new RestaurantUserDto({ userId, rol: UserRol[type] });
+    return await this.restaurantsService.addUser(restaurantId, restaurantUserDto);
+  }
+
+  @ResolveProperty("users", () => User)
+  async users(@Parent() restaurant: Restaurant) {
+    const restaurantFound = await this.restaurantsService.findOneById(restaurant.id);    
+    return restaurantFound.users.map(restaurantUser => {
+      const user = this.userDataLoader.load(restaurantUser.userId);
+      return {
+        user,
+        rol: restaurantUser.rol
+      }
+    })
+
   }
 
 }

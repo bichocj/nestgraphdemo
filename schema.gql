@@ -7,12 +7,18 @@ type User {
   username: String!
 }
 
+type RestaurantUser {
+  user: User!
+  rol: String!
+}
+
 type Restaurant {
   id: ID!
   name: String!
   address: String
   products: [Product!]!
   owner: User
+  users: [RestaurantUser!]!
   isActive: Boolean!
   isPublished: Boolean!
 }
@@ -61,10 +67,11 @@ type Mutation {
   addRestaurant(input: RestaurantInput!): Restaurant!
   updateRestaurant(input: RestaurantInput!, id: String!): Restaurant!
   removeRestaurant(id: String!): Boolean!
+  addUserToRestaurant(input: RestaurantUserInput!): Boolean!
   addCategory(input: CategoryInput!): Category!
   updateCategory(input: CategoryInput!, id: String!): Category!
   removeCategory(id: String!): Boolean!
-  addUser(userInput: UserInput!): User!
+  addUser(input: UserInput!): User!
 }
 
 input ProductInput {
@@ -89,6 +96,17 @@ input RestaurantInput {
   address: String
   isActive: Boolean!
   isPublished: Boolean!
+}
+
+input RestaurantUserInput {
+  restaurantId: ID!
+  userId: ID!
+  type: UserRol!
+}
+
+enum UserRol {
+  ADMIN
+  OTHER
 }
 
 input CategoryInput {

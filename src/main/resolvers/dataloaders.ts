@@ -7,6 +7,7 @@ import { ProductsService } from '../services/products.service';
 import { User, Restaurant, Category } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
 import { CategoriesService } from '../services/categories.service';
+import { UsersService } from '../services/users.service';
 
 export class OwnerDataLoader implements IDataLoader<string, User> {
   constructor(private readonly dataLoader: DataLoader<string, User>) { }
@@ -57,6 +58,24 @@ export class CategoryDataLoader implements IDataLoader<string, Category> {
     });
 
     return new CategoryDataLoader(dataLoader);
+  }
+
+  public async load(id: string) {
+    return this.dataLoader.load(id);
+  }
+}
+
+
+export class UserDataLoader implements IDataLoader<string, User> {
+  constructor(private readonly dataLoader: DataLoader<string, User>) { }
+
+  public static async create(service: UsersService): Promise<UserDataLoader> {
+    const dataLoader = new DataLoader<string, User>(async keys => {
+      const loadedEntities = await service.findAll({ '_id': { $in: keys } });
+      return keys.map(key => loadedEntities.find(entity => `${entity.id}` === `${key}`));
+    });
+
+    return new UserDataLoader(dataLoader);
   }
 
   public async load(id: string) {

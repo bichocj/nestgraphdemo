@@ -12,6 +12,15 @@ export class User {
 }
 
 @ObjectType()
+export class RestaurantUser {
+  @Field(type => User)
+  user: User;
+
+  @Field()
+  rol: string;
+}
+
+@ObjectType()
 export class Restaurant {
   @Field(type => ID)
   id: string;
@@ -27,6 +36,9 @@ export class Restaurant {
 
   @Field(type => User, { nullable: true })
   owner?: User;
+
+  @Field(type => [RestaurantUser])
+  users?: RestaurantUser[];
 
   @Field(type => Boolean)
   isActive: boolean;
@@ -82,7 +94,7 @@ export class Product {
 
   @Field(type => ID)
   restaurantId: string;
-  
+
   @Field(type => Restaurant)
   restaurant?: object;
 

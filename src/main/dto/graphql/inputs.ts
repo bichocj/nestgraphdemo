@@ -1,5 +1,15 @@
-import { Field, InputType, Float, ID } from '@nestjs/graphql';
+import { Field, InputType, Float, ID, registerEnumType } from '@nestjs/graphql';
 import { MaxLength } from 'class-validator';
+import { type } from 'os';
+
+export enum UserRol {
+  ADMIN,
+  OTHER
+}
+
+registerEnumType(UserRol, {
+  name: 'UserRol',
+});
 
 @InputType()
 export class UserInput {
@@ -27,6 +37,18 @@ export class RestaurantInput {
 
   @Field(type => Boolean)
   isPublished: boolean;
+}
+
+@InputType()
+export class RestaurantUserInput {
+  @Field(type => ID)
+  restaurantId: string
+  
+  @Field(type => ID)
+  userId: string
+
+  @Field(type => UserRol)
+  type: UserRol
 }
 
 @InputType()
