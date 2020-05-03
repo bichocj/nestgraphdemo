@@ -21,7 +21,7 @@ export const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  isSuperuser: {
+  isSuperUser: {
     type: Boolean,
     default: false,
   },

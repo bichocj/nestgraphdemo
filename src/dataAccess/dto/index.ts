@@ -75,6 +75,7 @@ export class UserDto {
   id: string;
   username: string;
   password: string;
+  isSuperUser: boolean;
 
   constructor({ id = undefined, username, password = undefined }) {
     if (id) {

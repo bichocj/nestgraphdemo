@@ -6,7 +6,7 @@ import { RestaurantsService } from '../services/restaurants.service';
 import { restaurantInputToDto } from '../dto/transformers';
 import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/services/products.service';
-import { OwnerDataLoader, UserDataLoader } from './dataloaders';
+import { UserDataLoader } from './dataloaders';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { CurrentUser } from 'src/auth/decorators';
 import { UsersService } from '../services/users.service';
@@ -19,7 +19,6 @@ export class RestaurantsResolver {
     private readonly restaurantsService: RestaurantsService,
     private readonly productsService: ProductsService,
     private readonly usersService: UsersService,
-    private readonly ownerDataLoader: OwnerDataLoader,
     private readonly userDataLoader: UserDataLoader
   ) { }
 
@@ -68,12 +67,6 @@ export class RestaurantsResolver {
   async products(@Parent() restaurant: Restaurant) {
     const { id } = restaurant;
     return this.productsService.findAll({ restaurantId: id });
-  }
-
-  @ResolveProperty("owner", () => User)
-  async owner(@Parent() restaurant: Restaurant): Promise<User> {
-    const { id } = restaurant;
-    return this.ownerDataLoader.load(restaurant.id);
   }
 
   @Mutation(returns => Boolean)

@@ -10,7 +10,7 @@ export function restaurantInputToDto(restaurantInput: RestaurantInput): Restaura
 
 export function restaurantDocumentToDto(document: RestaurantDocument): RestaurantDto {
   const { id, name, address, users, isActive, isPublished } = document;
-  const dto =  new RestaurantDto({ id, name, address, isActive, isPublished });
+  const dto = new RestaurantDto({ id, name, address, isActive, isPublished });
   dto.users = users;
   return dto;
 }
@@ -42,6 +42,8 @@ export function userInputToDto(userInput: UserInput): UserDto {
 }
 
 export function userDocumentToDto(userInterface: UserInterface): UserDto {
-  const { id, username, password } = userInterface;
-  return new UserDto({ id, username, password });
+  const { id, username, password, isSuperUser } = userInterface;
+  const dto = new UserDto({ id, username, password });
+  dto.isSuperUser = isSuperUser;
+  return dto;
 }

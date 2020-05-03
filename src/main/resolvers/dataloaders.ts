@@ -9,27 +9,6 @@ import { RestaurantsService } from '../services/restaurants.service';
 import { CategoriesService } from '../services/categories.service';
 import { UsersService } from '../services/users.service';
 
-export class OwnerDataLoader implements IDataLoader<string, User> {
-  constructor(private readonly dataLoader: DataLoader<string, User>) { }
-
-  public static async create(productsService: ProductsService): Promise<OwnerDataLoader> {
-    const dataLoader = new DataLoader<string, User>(async keys => {
-      const loadedEntities = [{
-        id: 'mockId',
-        username: 'mockUsername',
-      }];
-      // return keys.map(key => loadedEntities.find(entity => entity.id === key));
-      return keys.map(key => loadedEntities.find(entity => loadedEntities[0])); // sort by keys
-    });
-
-    return new OwnerDataLoader(dataLoader);
-  }
-
-  public async load(id: string) {
-    return this.dataLoader.load(id);
-  }
-}
-
 
 export class RestaurantDataLoader implements IDataLoader<string, Restaurant> {
   constructor(private readonly dataLoader: DataLoader<string, Restaurant>) { }

@@ -8,7 +8,9 @@ export class User {
 
   @Field()
   username: string;
-
+  
+  @Field(type => Boolean)
+  isSuperUser: boolean;
 }
 
 @ObjectType()

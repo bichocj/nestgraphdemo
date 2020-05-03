@@ -5,6 +5,7 @@
 type User {
   id: ID!
   username: String!
+  isSuperUser: Boolean!
 }
 
 type RestaurantUser {
