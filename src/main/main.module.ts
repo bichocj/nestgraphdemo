@@ -6,7 +6,7 @@ import { ProductsResolver } from './resolvers/products.resolver';
 import { ProductSchema, RestaurantSchema, CategorySchema, UserSchema } from '../dataAccess/schemas';
 import { RestaurantsResolver } from './resolvers/restaurants.resolver';
 import { RestaurantsService } from './services/restaurants.service';
-import { RestaurantDataLoader, CategoryDataLoader, UserDataLoader } from './resolvers/dataLoaders';
+import { RestaurantDataLoader, CategoryDataLoader, UserDataLoader } from './resolvers/dataloaders';
 import { CategoriesResolver } from './resolvers/categories.resolvers';
 import { CategoriesService } from './services/categories.service';
 import { UsersService } from './services/users.service';

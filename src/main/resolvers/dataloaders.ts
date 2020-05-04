@@ -3,7 +3,6 @@ export interface IDataLoader<K, V> {
 }
 
 import DataLoader from 'dataloader';
-import { ProductsService } from '../services/products.service';
 import { User, Restaurant, Category } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
 import { CategoriesService } from '../services/categories.service';

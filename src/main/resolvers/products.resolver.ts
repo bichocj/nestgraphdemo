@@ -6,7 +6,7 @@ import { CategoriesService } from '../services/categories.service';
 import { Product, Restaurant, ProductExtra, User } from '../dto/graphql/outputs';
 import { ProductInput, ProductFilterInput } from '../dto/graphql/inputs';
 import { productInputToDto } from '../dto/transformers';
-import { RestaurantDataLoader, CategoryDataLoader } from './dataLoaders';
+import { RestaurantDataLoader, CategoryDataLoader } from './dataloaders';
 import { ProductDto } from 'src/dataAccess/dto';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { RestaurantsService } from '../services/restaurants.service';
