@@ -102,6 +102,7 @@ export const ProductSchema = new mongoose.Schema({
       price: Number,
     },
   ],
+  isPrimary: Boolean,
   isActive: Boolean,
   isPublished: Boolean,
 });

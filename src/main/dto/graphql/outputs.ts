@@ -106,6 +106,9 @@ export class Product {
   @Field(type => Category)
   category?: object;
 
+  @Field(type => Boolean)
+  isPrimary: boolean;
+
   @Field(type => [ProductExtra], { defaultValue: [] })
   extras?: ProductExtra[]
 

@@ -47,6 +47,7 @@ type Product {
   restaurant: Restaurant!
   categoryId: ID!
   category: Category!
+  isPrimary: Boolean!
   extras: [ProductExtra!]
   isActive: Boolean!
   isPublished: Boolean!
@@ -54,7 +55,7 @@ type Product {
 
 type Query {
   product(id: String!): Product!
-  products(skip: Int = 0, take: Int = 25): [Product!]!
+  products(restaurantId: String, isPrimary: Boolean = true, skip: Int = 0, take: Int = 25): [Product!]!
   restaurant(id: String!): Restaurant!
   restaurants(skip: Int = 0, take: Int = 25): [Restaurant!]!
   category(id: String!): Category!
@@ -83,6 +84,7 @@ input ProductInput {
   restaurantId: ID!
   categoryId: ID!
   extras: [ProductExtraInput!]!
+  isPrimary: Boolean!
   isActive: Boolean!
   isPublished: Boolean!
 }

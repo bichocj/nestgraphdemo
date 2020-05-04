@@ -1,6 +1,5 @@
-import { Field, InputType, Float, ID, registerEnumType } from '@nestjs/graphql';
-import { MaxLength } from 'class-validator';
-import { type } from 'os';
+import { Field, InputType, Float, ID, registerEnumType, Int, ArgsType } from '@nestjs/graphql';
+import { MaxLength, Min, Max } from 'class-validator';
 
 export enum UserRol {
   ADMIN,
@@ -10,6 +9,24 @@ export enum UserRol {
 registerEnumType(UserRol, {
   name: 'UserRol',
 });
+
+@ArgsType()
+export class ProductFilterInput {
+  @Field({ nullable: true })
+  restaurantId?: string;
+
+  @Field(type => Boolean, { defaultValue: true })
+  isPrimary: boolean;
+
+  @Field(type => Int)
+  @Min(0)
+  skip: number = 0;
+
+  @Field(type => Int)
+  @Min(1)
+  @Max(50)
+  take: number = 25;
+}
 
 @InputType()
 export class UserInput {
@@ -43,7 +60,7 @@ export class RestaurantInput {
 export class RestaurantUserInput {
   @Field(type => ID)
   restaurantId: string
-  
+
   @Field(type => ID)
   userId: string
 
@@ -99,7 +116,10 @@ export class ProductInput {
   @Field(type => [ProductExtraInput])
   extras?: ProductExtraInput[];
 
-  
+
+  @Field(type => Boolean)
+  isPrimary: boolean;
+
   @Field(type => Boolean)
   isActive: boolean;
 

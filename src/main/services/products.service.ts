@@ -28,7 +28,14 @@ export class ProductsService {
 
   async findAll(where = {}): Promise<ProductDto[]> {
     const items = await this.entity.find(where).exec();
-    return items.map(item => productDocumentToDto(item))
+    // console.log('findAll')
+    // console.log(items)
+    return items.map(item => {
+      console.log('item------------------------');
+      console.log(item);
+      console.log('item.isPrimary', item.isActive, item.isPrimary);
+      return productDocumentToDto(item)
+    })
   }
 
   async remove(id: string): Promise<boolean> {

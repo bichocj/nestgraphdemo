@@ -3,17 +3,16 @@ import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestj
 
 import { ProductsService } from '../services/products.service';
 import { CategoriesService } from '../services/categories.service';
-import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
-import { Product, Restaurant, ProductExtra } from '../dto/graphql/outputs';
-import { ProductInput } from '../dto/graphql/inputs';
+import { Product, Restaurant, ProductExtra, User } from '../dto/graphql/outputs';
+import { ProductInput, ProductFilterInput } from '../dto/graphql/inputs';
 import { productInputToDto } from '../dto/transformers';
-import { RestaurantDataLoader, CategoryDataLoader } from './dataloaders';
+import { RestaurantDataLoader, CategoryDataLoader } from './dataLoaders';
 import { ProductDto } from 'src/dataAccess/dto';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { RestaurantsService } from '../services/restaurants.service';
+import { CurrentUser } from 'src/auth/decorators';
 
 @Resolver(of => Product)
-@UseGuards(GqlAuthGuard)
 export class ProductsResolver {
   constructor(
     private readonly productsService: ProductsService,
@@ -33,20 +32,25 @@ export class ProductsResolver {
   }
 
   @Query(returns => [Product])
-  products(@Args() data: PaginationInput): Promise<Product[]> {
+  products(@Args() { restaurantId, isPrimary }: ProductFilterInput): Promise<Product[]> {
+    if (restaurantId) {
+      return this.productsService.findAll({ restaurantId, isPrimary });
+    }
     return this.productsService.findAll();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Product)
   async addProduct(
     @Args('input') input: ProductInput,
-  ): Promise<Product> {
+    @CurrentUser() user: User): Promise<Product> {
     const data = productInputToDto(input);
     await this.validateRelations(data);
     const product = await this.productsService.create(data);
     return product;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Product)
   async updateProduct(
     @Args('id') id: string,
@@ -58,6 +62,7 @@ export class ProductsResolver {
     return product;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Boolean)
   async removeProduct(@Args('id') id: string) {
     // TODO validate if no have relation with some order

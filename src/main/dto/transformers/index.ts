@@ -16,13 +16,16 @@ export function restaurantDocumentToDto(document: RestaurantDocument): Restauran
 }
 
 export function productInputToDto(productInput: ProductInput): ProductDto {
-  const { name, description, price, cost, restaurantId, categoryId, extras, isActive, isPublished } = productInput;
-  return new ProductDto({ name, description, price, cost, restaurantId, categoryId, extras, isActive, isPublished });
+  const { name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInput;
+  return new ProductDto({ name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
 export function productDocumentToDto(productInterface: ProductDocument): ProductDto {
-  const { id, name, description, price, cost, restaurantId, categoryId, extras, isActive, isPublished } = productInterface;
-  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId, extras, isActive, isPublished });
+  // console.log('productInterface');
+  // console.log(productInterface);
+  const { id, name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInterface;
+  console.log('productDocumentToDto', isPrimary)
+  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
 export function categoryInputToDto(categoryInput: CategoryInput): CategoryDto {

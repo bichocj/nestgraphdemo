@@ -3,7 +3,7 @@ export class CategoryDto {
   name: string;
   isActive: boolean;
   isPublished: boolean;
-  constructor({ id = undefined, name, isActive=true, isPublished=true }) {
+  constructor({ id = undefined, name, isActive = true, isPublished = true }) {
     if (id) {
       this.id = id;
     }
@@ -21,10 +21,11 @@ export class ProductDto {
   cost: number;
   restaurantId: string;
   categoryId: string;
-  extras: [];  
+  extras: [];
+  isPrimary: boolean;
   isActive: boolean;
   isPublished: boolean;
-  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId, extras, isActive=true, isPublished=true }) {
+  constructor({ id = undefined, name, description, price, cost, restaurantId, categoryId, extras, isPrimary = true, isActive = true, isPublished = true }) {
     if (id) {
       this.id = id;
     }
@@ -35,7 +36,8 @@ export class ProductDto {
     this.restaurantId = restaurantId;
     this.categoryId = categoryId;
     this.extras = extras;
-    
+    this.isPrimary = isPrimary;
+
     this.isActive = isActive;
     this.isPublished = isPublished;
   }
@@ -45,7 +47,7 @@ export class ProductDto {
 export class RestaurantUserDto {
   userId: string;
   rol: string;
-  constructor({userId, rol}){
+  constructor({ userId, rol }) {
     this.userId = userId;
     this.rol = rol;
   }
@@ -58,13 +60,13 @@ export class RestaurantDto {
   users: [any];
   isActive: boolean;
   isPublished: boolean;
-  constructor({ id = undefined, name, address, isActive=true, isPublished=true }) {
+  constructor({ id = undefined, name, address, isActive = true, isPublished = true }) {
     if (id) {
       this.id = id;
     }
     this.name = name;
     this.address = address;
-    
+
     this.isActive = isActive;
     this.isPublished = isPublished;
   }

@@ -20,6 +20,7 @@ export interface ProductDocument extends Document {
   readonly restaurantId: string,
   readonly categoryId: string,
   readonly extras: [],
+  readonly isPrimary: boolean;
   readonly isActive: boolean;
   readonly isPublished: boolean;
 }
