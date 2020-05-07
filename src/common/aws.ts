@@ -1,4 +1,3 @@
-import * as fs from "fs";
 import * as AWS from "aws-sdk";
 import { Readable } from "stream";
 const BUCKET_NAME = 'atixteam';

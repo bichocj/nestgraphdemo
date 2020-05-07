@@ -27,6 +27,7 @@ type Restaurant {
 type Category {
   id: ID!
   name: String!
+  photo: String
   isActive: Boolean!
   isPublished: Boolean!
 }
@@ -41,6 +42,7 @@ type Product {
   id: ID!
   name: String!
   description: String
+  photo: String
   price: Float!
   cost: Float!
   restaurantId: ID!
@@ -80,6 +82,7 @@ type Mutation {
 input ProductInput {
   name: String!
   description: String
+  photo: String
   price: Float!
   cost: Float!
   restaurantId: ID!
@@ -115,6 +118,7 @@ enum UserRol {
 
 input CategoryInput {
   name: String!
+  photo: String
   isActive: Boolean!
   isPublished: Boolean!
 }

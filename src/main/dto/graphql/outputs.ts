@@ -57,6 +57,9 @@ export class Category {
 
   @Field()
   name: string;
+  
+  @Field({ nullable: true })
+  photo: string;
 
   @Field()
   isActive: boolean;
@@ -84,9 +87,12 @@ export class Product {
 
   @Field()
   name: string;
-
+  
   @Field({ nullable: true })
   description?: string;
+
+  @Field({ nullable: true })
+  photo: string;
 
   @Field()
   price: number;

@@ -53,6 +53,12 @@ export const CategorySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  photo: {
+    type: String,
+    minlength: [6, messages['minlength']],
+    required: false,
+    trim: true,
+  },
   isActive: Boolean,
   isPublished: Boolean,
 });
@@ -70,6 +76,12 @@ export const ProductSchema = new mongoose.Schema({
     type: String,
     minlength: [6, messages['minlength']],
     maxlength: [100, messages['maxlength']],
+    trim: true,
+  },
+  photo: {
+    type: String,
+    minlength: [6, messages['minlength']],
+    required: false,
     trim: true,
   },
   price: {

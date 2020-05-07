@@ -16,26 +16,26 @@ export function restaurantDocumentToDto(document: RestaurantDocument): Restauran
 }
 
 export function productInputToDto(productInput: ProductInput): ProductDto {
-  const { name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInput;
-  return new ProductDto({ name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
+  const { name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInput;
+  return new ProductDto({ name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
 export function productDocumentToDto(productInterface: ProductDocument): ProductDto {
   // console.log('productInterface');
   // console.log(productInterface);
-  const { id, name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInterface;
+  const { id, name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInterface;
   console.log('productDocumentToDto', isPrimary)
-  return new ProductDto({ id, name, description, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
+  return new ProductDto({ id, name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
 export function categoryInputToDto(categoryInput: CategoryInput): CategoryDto {
-  const { name, isActive, isPublished } = categoryInput;
-  return new CategoryDto({ name, isActive, isPublished });
+  const { name, photo, isActive, isPublished } = categoryInput;
+  return new CategoryDto({ name, photo, isActive, isPublished });
 }
 
 export function categoryDocumentToDto(categoryInterface: CategoryDocument): CategoryDto {
-  const { id, name, isActive, isPublished } = categoryInterface;
-  return new CategoryDto({ id, name, isActive, isPublished });
+  const { id, name, photo, isActive, isPublished } = categoryInterface;
+  return new CategoryDto({ id, name, photo, isActive, isPublished });
 }
 
 

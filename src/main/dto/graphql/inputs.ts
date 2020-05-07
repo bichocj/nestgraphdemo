@@ -73,6 +73,9 @@ export class CategoryInput {
   @Field()
   @MaxLength(30)
   name: string;
+  
+  @Field({ nullable: true })
+  photo: string;
 
   @Field(type => Boolean)
   isActive: boolean;
@@ -100,6 +103,9 @@ export class ProductInput {
   @Field({ nullable: true })
   @MaxLength(255)
   description?: string;
+
+  @Field({ nullable: true })
+  photo: string;
 
   @Field(type => Float)
   price: number;
