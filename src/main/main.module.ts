@@ -11,6 +11,7 @@ import { CategoriesResolver } from './resolvers/categories.resolvers';
 import { CategoriesService } from './services/categories.service';
 import { UsersService } from './services/users.service';
 import { UsersResolver } from './resolvers/users.resolvers';
+import { FileResolver } from './resolvers/fileResolver';
 @Module({
   imports: [MongooseModule.forFeature([
     { name: 'User', schema: UserSchema },
@@ -22,7 +23,8 @@ import { UsersResolver } from './resolvers/users.resolvers';
     UsersService, UsersResolver,
     RestaurantsService, RestaurantsResolver,
     ProductsService, ProductsResolver,
-    CategoriesService, CategoriesResolver,    
+    CategoriesService, CategoriesResolver,
+    FileResolver,
     {
       inject: [RestaurantsService],
       useFactory: RestaurantDataLoader.create,

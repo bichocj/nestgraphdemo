@@ -74,6 +74,7 @@ type Mutation {
   updateCategory(input: CategoryInput!, id: String!): Category!
   removeCategory(id: String!): Boolean!
   addUser(input: UserInput!): User!
+  uploadFile(picture: Upload!): String!
 }
 
 input ProductInput {
@@ -122,3 +123,6 @@ input UserInput {
   username: String!
   password: String!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
