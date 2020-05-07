@@ -20,11 +20,8 @@ export function productInputToDto(productInput: ProductInput): ProductDto {
   return new ProductDto({ name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
-export function productDocumentToDto(productInterface: ProductDocument): ProductDto {
-  // console.log('productInterface');
-  // console.log(productInterface);
+export function productDocumentToDto(productInterface: ProductDocument): ProductDto {  
   const { id, name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished } = productInterface;
-  console.log('productDocumentToDto', isPrimary)
   return new ProductDto({ id, name, description, photo, price, cost, restaurantId, categoryId, extras, isPrimary, isActive, isPublished });
 }
 
