@@ -13,7 +13,6 @@ import { UsersService } from '../services/users.service';
 import { RestaurantUserDto } from 'src/dataAccess/dto';
 
 @Resolver(of => Restaurant)
-@UseGuards(GqlAuthGuard)
 export class RestaurantsResolver {
   constructor(
     private readonly restaurantsService: RestaurantsService,
@@ -39,6 +38,7 @@ export class RestaurantsResolver {
     return this.restaurantsService.findAll();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Restaurant)
   async addRestaurant(
     @Args('input') input: RestaurantInput,
@@ -48,6 +48,7 @@ export class RestaurantsResolver {
     return restaurant;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Restaurant)
   async updateRestaurant(
     @Args('id') id: string,
@@ -58,6 +59,7 @@ export class RestaurantsResolver {
     return restaurant;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Boolean)
   async removeRestaurant(@Args('id') id: string) {
     return this.restaurantsService.remove(id);
@@ -69,6 +71,7 @@ export class RestaurantsResolver {
     return this.productsService.findAll({ restaurantId: id });
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Boolean)
   async addUserToRestaurant(@Args('input') input: RestaurantUserInput) {
     const { userId, restaurantId, type } = input;
