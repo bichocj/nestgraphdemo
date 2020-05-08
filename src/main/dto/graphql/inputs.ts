@@ -48,6 +48,9 @@ export class RestaurantInput {
   @Field({ nullable: true })
   @MaxLength(255)
   address?: string;
+  
+  @Field({ nullable: true })
+  photo: string;
 
   @Field(type => Boolean)
   isActive: boolean;

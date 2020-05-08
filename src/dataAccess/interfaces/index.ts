@@ -30,6 +30,7 @@ export interface ProductDocument extends Document {
 export interface RestaurantDocument extends Document {
   readonly name: string,
   readonly address: string,  
+  readonly photo: string,
   readonly isActive: boolean;
   readonly isPublished: boolean;
   readonly users: [any];

@@ -147,6 +147,12 @@ export const RestaurantSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  photo: {
+    type: String,
+    minlength: [6, messages['minlength']],
+    required: false,
+    trim: true,
+  },  
   users: {
     type: [RestaurantUserSchema],
     default: []

@@ -4,8 +4,8 @@ import { ProductDto, RestaurantDto, CategoryDto, UserDto } from "src/dataAccess/
 
 
 export function restaurantInputToDto(restaurantInput: RestaurantInput): RestaurantDto {
-  const { name, address, isActive, isPublished } = restaurantInput;
-  return new RestaurantDto({ name, address, isActive, isPublished });
+  const { name, address, photo, isActive, isPublished } = restaurantInput;
+  return new RestaurantDto({ name, address, photo, isActive, isPublished });
 }
 
 export function restaurantDocumentToDto(document: RestaurantDocument): RestaurantDto {

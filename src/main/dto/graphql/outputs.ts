@@ -32,6 +32,9 @@ export class Restaurant {
 
   @Field({ nullable: true })
   address?: string;
+  
+  @Field({ nullable: true })
+  photo: string;
 
   @Field(type => [Product])
   products?: Product[];
