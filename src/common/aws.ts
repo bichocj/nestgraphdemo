@@ -1,5 +1,10 @@
 import * as AWS from "aws-sdk";
 import { Readable } from "stream";
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+
 const BUCKET_NAME = process.env.AWS_STORAGE_BUCKET_NAME;
 const IAM_USER_KEY = process.env.AWS_ACCESS_KEY_ID;
 const IAM_USER_SECRET = process.env.AWS_SECRET_ACCESS_KEY;
