@@ -8,7 +8,7 @@ export class User {
 
   @Field()
   username: string;
-  
+
   @Field(type => Boolean)
   isSuperUser: boolean;
 }
@@ -30,11 +30,26 @@ export class Restaurant {
   @Field()
   name: string;
 
-  @Field({ nullable: true })
+  @Field({ defaultValue: '' })
+  description?: string;
+
+  @Field({ defaultValue: '' })
+  schedule?: string;
+
+  @Field()
   address?: string;
-  
-  @Field({ nullable: true })
+
+  @Field()
+  rate?: number;
+
+  @Field()
   photo?: string;
+
+  @Field({ defaultValue: '' })
+  phone: string;
+
+  @Field({ defaultValue: '' })
+  mobile?: string;
 
   @Field(type => [Product])
   products?: Product[];
@@ -60,7 +75,7 @@ export class Category {
 
   @Field()
   name: string;
-  
+
   @Field({ nullable: true })
   photo: string;
 
@@ -90,7 +105,7 @@ export class Product {
 
   @Field()
   name: string;
-  
+
   @Field({ nullable: true })
   description?: string;
 

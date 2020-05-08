@@ -29,8 +29,13 @@ export interface ProductDocument extends Document {
 
 export interface RestaurantDocument extends Document {
   readonly name: string,
+  readonly description: string,
+  readonly schedule: string,
   readonly address: string,  
+  readonly rate: number,  
   readonly photo: string,
+  readonly phone: string,
+  readonly mobile: string,
   readonly isActive: boolean;
   readonly isPublished: boolean;
   readonly users: [any];

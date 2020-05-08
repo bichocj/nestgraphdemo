@@ -10,6 +10,16 @@ registerEnumType(UserRol, {
   name: 'UserRol',
 });
 
+@InputType()
+export class CommonFilterInput {
+  
+  @Field(type => Boolean, {nullable: true})
+  isActive?: boolean;
+
+  @Field(type => Boolean, {nullable: true})
+  isPublished?: boolean;
+}
+
 @ArgsType()
 export class ProductFilterInput {
   @Field({ nullable: true })
@@ -44,13 +54,27 @@ export class RestaurantInput {
   @Field()
   @MaxLength(30)
   name: string;
+  
+  @Field({ nullable: true })  
+  description?: string;
+  
+  @Field({ nullable: true })  
+  schedule?: string;
 
-  @Field({ nullable: true })
-  @MaxLength(255)
+  @Field()
   address?: string;
+  
+  @Field()
+  rate?: number;
   
   @Field({ nullable: true })
   photo: string;
+
+  @Field({ nullable: true })
+  phone: string;
+
+  @Field({ nullable: true })
+  mobile: string;
 
   @Field(type => Boolean)
   isActive: boolean;

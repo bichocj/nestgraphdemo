@@ -60,19 +60,28 @@ export class RestaurantUserDto {
 export class RestaurantDto {
   id: string;
   name: string;
+  description: string;
+  schedule: string;
   address: string;
+  rate: number;
   photo: string;
+  phone: string;
+  mobile: string;
   users: [any];
   isActive: boolean;
   isPublished: boolean;
-  constructor({ id = undefined, name, address, photo, isActive = true, isPublished = true }) {
+  constructor({ id = undefined, name, description, schedule, address, rate, photo, phone, mobile, isActive = true, isPublished = true }) {
     if (id) {
       this.id = id;
     }
     this.name = name;
     this.address = address;
     this.photo = photo;
-
+    this.description = description;
+    this.schedule = schedule;
+    this.rate = rate;
+    this.phone = phone;
+    this.mobile = mobile;
     this.isActive = isActive;
     this.isPublished = isPublished;
   }

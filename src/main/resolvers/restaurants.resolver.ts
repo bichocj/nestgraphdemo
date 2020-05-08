@@ -1,16 +1,15 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Parent, ResolveField, ResolveProperty } from '@nestjs/graphql';
-import { RestaurantInput, RestaurantUserInput, UserRol } from '../dto/graphql/inputs';
-import { Restaurant, User, RestaurantUser } from '../dto/graphql/outputs';
+import { RestaurantInput, RestaurantUserInput, UserRol, CommonFilterInput } from '../dto/graphql/inputs';
+import { Restaurant, User } from '../dto/graphql/outputs';
 import { RestaurantsService } from '../services/restaurants.service';
 import { restaurantInputToDto } from '../dto/transformers';
-import { PaginationInput } from 'src/common/dto/graphql/pagination-input';
 import { ProductsService } from 'src/main/services/products.service';
 import { UserDataLoader } from './dataloaders';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
-import { CurrentUser } from 'src/auth/decorators';
 import { UsersService } from '../services/users.service';
 import { RestaurantUserDto } from 'src/dataAccess/dto';
+import { pickBy } from 'lodash';
 
 @Resolver(of => Restaurant)
 export class RestaurantsResolver {
@@ -31,17 +30,18 @@ export class RestaurantsResolver {
   }
 
   @Query(returns => [Restaurant])
-  restaurants(
-    @Args() data: PaginationInput,
-    @CurrentUser() user: User
+  async restaurants(
+    @Args('input', { nullable: true, defaultValue: {} }) input: CommonFilterInput
   ): Promise<Restaurant[]> {
-    return this.restaurantsService.findAll();
+    const { isActive, isPublished } = input;
+    const where = pickBy({isActive, isPublished}, item => item != undefined);
+    return this.restaurantsService.findAll(where);
   }
 
   @UseGuards(GqlAuthGuard)
   @Mutation(returns => Restaurant)
   async addRestaurant(
-    @Args('input') input: RestaurantInput,
+    @Args('input') input: RestaurantInput
   ): Promise<Restaurant> {
     const data = restaurantInputToDto(input);
     const restaurant = await this.restaurantsService.create(data);
@@ -97,7 +97,7 @@ export class RestaurantsResolver {
 
   @ResolveProperty("users", () => User)
   async users(@Parent() restaurant: Restaurant) {
-    const restaurantFound = await this.restaurantsService.findOneById(restaurant.id);    
+    const restaurantFound = await this.restaurantsService.findOneById(restaurant.id);
     return restaurantFound.users.map(restaurantUser => {
       const user = this.userDataLoader.load(restaurantUser.userId);
       return {

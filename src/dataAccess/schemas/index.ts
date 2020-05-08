@@ -67,8 +67,6 @@ CategorySchema.plugin(uniqueValidator, { message: messages['unique'] });
 export const ProductSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: [6, messages['minlength']],
-    maxlength: [20, messages['maxlength']],
     required: true,
     trim: true,
   },
@@ -134,24 +132,45 @@ export const RestaurantUserSchema = new mongoose.Schema({
 export const RestaurantSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: [6, messages['minlength']],
-    maxlength: [20, messages['maxlength']],
     unique: true,
     required: true,
     trim: true,
   },
+  description: {
+    type: String,
+    required: false,
+    trim: true,
+  },
+  schedule: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   address: {
     type: String,
-    minlength: [6, messages['minlength']],
-    maxlength: [200, messages['maxlength']],
-    required: true,
+    required: false,
     trim: true,
+  },
+  rate: {
+    type: Number,
+    required: true,
+    default: 5,
   },
   photo: {
     type: String,
-    minlength: [6, messages['minlength']],
     required: false,
     trim: true,
+    default: 'https://atixteam.s3.amazonaws.com/myapp/food0.jpg' // TODO update this default
+  },  
+  phone: {
+    type: String,
+    required: false,
+    trim: true
+  },  
+  mobile: {
+    type: String,
+    required: false,
+    trim: true
   },  
   users: {
     type: [RestaurantUserSchema],

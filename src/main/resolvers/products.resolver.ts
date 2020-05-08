@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver, ResolveProperty, Parent } from '@nestj
 
 import { ProductsService } from '../services/products.service';
 import { CategoriesService } from '../services/categories.service';
-import { Product, Restaurant, ProductExtra, User } from '../dto/graphql/outputs';
+import { Product, Restaurant, ProductExtra, User, Category } from '../dto/graphql/outputs';
 import { ProductInput, ProductFilterInput } from '../dto/graphql/inputs';
 import { productInputToDto } from '../dto/transformers';
 import { RestaurantDataLoader, CategoryDataLoader } from './dataloaders';
@@ -94,8 +94,8 @@ export class ProductsResolver {
     return this.restaurantDataLoader.load(restaurantId);
   }
 
-  @ResolveProperty("category", () => Restaurant)
-  async category(@Parent() product: ProductDto): Promise<Restaurant> {
+  @ResolveProperty("category", () => Category)
+  async category(@Parent() product: ProductDto): Promise<Category> {
     const { categoryId } = product;
     return this.categoryDataLoader.load(categoryId);
   }

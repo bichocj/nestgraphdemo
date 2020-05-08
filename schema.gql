@@ -16,8 +16,13 @@ type RestaurantUser {
 type Restaurant {
   id: ID!
   name: String!
-  address: String
-  photo: String
+  description: String
+  schedule: String
+  address: String!
+  rate: Float!
+  photo: String!
+  phone: String
+  mobile: String
   products: [Product!]!
   owner: User
   users: [RestaurantUser!]!
@@ -60,9 +65,14 @@ type Query {
   product(id: String!): Product!
   products(restaurantId: String, isPrimary: Boolean = true, skip: Int = 0, take: Int = 25): [Product!]!
   restaurant(id: String!): Restaurant!
-  restaurants(skip: Int = 0, take: Int = 25): [Restaurant!]!
+  restaurants(input: CommonFilterInput = {}): [Restaurant!]!
   category(id: String!): Category!
   categories(skip: Int = 0, take: Int = 25): [Category!]!
+}
+
+input CommonFilterInput {
+  isActive: Boolean
+  isPublished: Boolean
 }
 
 type Mutation {
@@ -101,8 +111,13 @@ input ProductExtraInput {
 
 input RestaurantInput {
   name: String!
-  address: String
+  description: String
+  schedule: String
+  address: String!
+  rate: Float!
   photo: String
+  phone: String
+  mobile: String
   isActive: Boolean!
   isPublished: Boolean!
 }
