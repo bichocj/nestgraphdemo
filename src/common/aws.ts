@@ -1,8 +1,8 @@
 import * as AWS from "aws-sdk";
 import { Readable } from "stream";
-const BUCKET_NAME = 'atixteam';
-const IAM_USER_KEY = 'AKIAIS3ZKSJOV7MQ3GIQ';
-const IAM_USER_SECRET = '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';
+const BUCKET_NAME = process.env.AWS_STORAGE_BUCKET_NAME;
+const IAM_USER_KEY = process.env.AWS_ACCESS_KEY_ID;
+const IAM_USER_SECRET = process.env.AWS_SECRET_ACCESS_KEY;
 
 const s3bucket = new AWS.S3({
   accessKeyId: IAM_USER_KEY,
