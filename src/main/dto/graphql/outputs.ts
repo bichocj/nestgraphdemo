@@ -34,7 +34,7 @@ export class Restaurant {
   address?: string;
   
   @Field({ nullable: true })
-  photo: string;
+  photo?: string;
 
   @Field(type => [Product])
   products?: Product[];

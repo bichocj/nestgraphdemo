@@ -17,6 +17,7 @@ type Restaurant {
   id: ID!
   name: String!
   address: String
+  photo: String
   products: [Product!]!
   owner: User
   users: [RestaurantUser!]!
@@ -101,6 +102,7 @@ input ProductExtraInput {
 input RestaurantInput {
   name: String!
   address: String
+  photo: String
   isActive: Boolean!
   isPublished: Boolean!
 }
