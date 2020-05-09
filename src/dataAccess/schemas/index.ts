@@ -58,6 +58,7 @@ export const CategorySchema = new mongoose.Schema({
     minlength: [6, messages['minlength']],
     required: false,
     trim: true,
+    default: 'https://atixteam.s3.amazonaws.com/myapp/food0.jpg' // TODO update this default
   },
   isActive: Boolean,
   isPublished: Boolean,
