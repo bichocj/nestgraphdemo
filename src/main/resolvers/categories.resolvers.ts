@@ -10,7 +10,6 @@ import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { ProductsService } from '../services/products.service';
 
 @Resolver(of => Category)
-@UseGuards(GqlAuthGuard)
 export class CategoriesResolver {
   constructor(
     private readonly categoriesService: CategoriesService,
@@ -30,6 +29,7 @@ export class CategoriesResolver {
     return this.categoriesService.findAll();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Category)
   async addCategory(
     @Args('input') input: CategoryInput,
@@ -39,6 +39,7 @@ export class CategoriesResolver {
     return category;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Category)
   async updateCategory(
     @Args('id') id: string,
@@ -49,6 +50,7 @@ export class CategoriesResolver {
     return category;
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(returns => Boolean)
   async removeCategory(@Args('id') id: string) {
     const products = await this.productsService.findAll({ categoryId: id });
