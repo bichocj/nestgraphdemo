@@ -41,7 +41,7 @@ export const UserSchema = new mongoose.Schema({
     required: false,
     trim: true,
   },
-});
+}, { timestamps: true });
 UserSchema.plugin(uniqueValidator, { message: messages['unique'] });
 
 export const CategorySchema = new mongoose.Schema({
@@ -62,7 +62,10 @@ export const CategorySchema = new mongoose.Schema({
   },
   isActive: Boolean,
   isPublished: Boolean,
-});
+  
+},
+{ timestamps: true }
+);
 CategorySchema.plugin(uniqueValidator, { message: messages['unique'] });
 
 export const ProductSchema = new mongoose.Schema({
@@ -116,7 +119,7 @@ export const ProductSchema = new mongoose.Schema({
   isPrimary: Boolean,
   isActive: Boolean,
   isPublished: Boolean,
-});
+}, { timestamps: true });
 
 export const RestaurantUserSchema = new mongoose.Schema({
   userId: {
@@ -179,5 +182,5 @@ export const RestaurantSchema = new mongoose.Schema({
   },
   isActive: Boolean,
   isPublished: Boolean,
-});
+}, { timestamps: true });
 RestaurantSchema.plugin(uniqueValidator, { message: messages['unique'] });
